@@ -1,500 +1,620 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BPS Provinsi Jawa Tengah | Portal Statistik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>BRIDA JATENG | Portal Jurnal Ultimate</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #F4F7FC; color: #1E293B; transition: 0.3s; }
+        body.dark-mode { background: #0F172A; color: #E2E8F0; }
+        body.dark-mode .navbar, body.dark-mode .card, body.dark-mode .modal-content, 
+        body.dark-mode .info-card, body.dark-mode .gallery-section, body.dark-mode .additional-table {
+            background: #1E293B; border-color: #334155;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f5f5f5;
-            color: #333;
-            line-height: 1.5;
-        }
-
-        /* Navbar */
-        .top-nav {
-            background: #1a3c5e;
-            color: white;
-            padding: 0.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            font-size: 0.85rem;
-            gap: 1rem;
-        }
-        .top-nav a {
-            color: white;
-            text-decoration: none;
-        }
-        .top-nav a:hover {
-            text-decoration: underline;
-        }
-
-        .main-nav {
-            background: white;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .logo-icon {
-            background: #1a3c5e;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: white;
-        }
-        .logo-text h1 {
-            font-size: 1.2rem;
-            color: #1a3c5e;
-        }
-        .logo-text p {
-            font-size: 0.7rem;
-            color: #666;
-        }
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-        .nav-links a:hover {
-            color: #1a3c5e;
-        }
-        .search-icon {
-            background: #1a3c5e;
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-            color: white;
-            cursor: pointer;
-        }
-
-        /* Banner Survei */
-        .survey-banner {
-            background: #e8f0f7;
-            padding: 0.8rem 5%;
-            text-align: center;
-            font-size: 0.9rem;
-            border-bottom: 1px solid #c0d4e8;
-        }
-        .survey-banner a {
-            color: #1a3c5e;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        /* Hero */
-        .hero {
-            background: linear-gradient(135deg, #1a3c5e 0%, #0f2b44 100%);
-            color: white;
-            padding: 3rem 5%;
-            text-align: center;
-        }
-        .hero h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            max-width: 800px;
-            margin: 0 auto 1rem;
-        }
-        .hero p {
-            max-width: 700px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
-        .search-box {
-            max-width: 500px;
-            margin: 2rem auto 0;
-            display: flex;
-            background: white;
-            border-radius: 50px;
-            overflow: hidden;
-        }
-        .search-box input {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            border: none;
-            outline: none;
-            font-size: 1rem;
-        }
-        .search-box button {
-            background: #1a3c5e;
-            border: none;
-            padding: 0 1.8rem;
-            color: white;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 5%;
-        }
-
-        /* Indeks Harga Konsumen Grid */
-        .section-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #1a3c5e;
-            border-left: 4px solid #1a3c5e;
-            padding-left: 1rem;
-        }
-        .ihk-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .ihk-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.2rem;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: 0.2s;
-            border: 1px solid #e0e0e0;
-        }
-        .ihk-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-        }
-        .ihk-card h4 {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 0.5rem;
-        }
-        .ihk-card .value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1a3c5e;
-        }
-
-        /* Ekspor Impor Banner */
-        .trade-banner {
-            background: linear-gradient(135deg, #1a5d7e, #1a3c5e);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        .trade-banner h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-        .trade-banner .trade-numbers {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-        .trade-item {
-            text-align: center;
-        }
-        .trade-item .label {
-            font-size: 0.85rem;
-            opacity: 0.8;
-        }
-        .trade-item .number {
-            font-size: 1.6rem;
-            font-weight: 700;
-        }
-
-        /* 2 Kolom: Berita + Antrian */
-        .two-columns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        .news-section, .queue-section {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        .news-item {
-            border-bottom: 1px solid #eee;
-            padding: 1rem 0;
-        }
-        .news-item:last-child {
-            border-bottom: none;
-        }
-        .news-date {
-            font-size: 0.75rem;
-            color: #1a3c5e;
-            font-weight: 600;
-        }
-        .news-title {
-            font-weight: 600;
-            margin: 0.3rem 0;
-            color: #333;
-        }
-        .news-desc {
-            font-size: 0.85rem;
-            color: #666;
-        }
-        .btn-outline {
-            display: inline-block;
-            margin-top: 1rem;
-            color: #1a3c5e;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-        .queue-box {
-            background: #f0f6fe;
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        .queue-link {
-            background: #1a3c5e;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 40px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 0.5rem;
-            font-weight: 500;
-        }
-
-        /* Menu Footer */
-        .menu-footer {
-            background: #f0f0f0;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            border-top: 1px solid #ddd;
-        }
-        .menu-footer a {
-            text-decoration: none;
-            color: #1a3c5e;
-            font-weight: 500;
-        }
-
-        /* Copyright */
-        .copyright {
-            background: #1a3c5e;
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .two-columns {
-                grid-template-columns: 1fr;
-            }
-            .trade-numbers {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .nav-links {
-                justify-content: center;
-            }
-        }
+        .top-bar { background: #0F2E44; color: white; padding: 0.8rem 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; }
+        .navbar { background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.05); padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1400px; margin: auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; color: #0F2E44; }
+        .nav-links { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .btn-primary { background: #2C5F8A; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 40px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-danger { background: #dc2626; }
+        .hero { padding: 3rem 2rem; text-align: center; background: linear-gradient(135deg, #EFF6FF, #FFF); }
+        .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .info-card, .additional-table, .gallery-section { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid #E2EDF2; }
+        .swiper { width: 100%; height: 400px; border-radius: 1rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: white; width: 90%; max-width: 800px; border-radius: 1rem; padding: 1.5rem; max-height: 85vh; overflow-y: auto; position: relative; }
+        .close-modal { position: absolute; top: 0.8rem; right: 1rem; font-size: 1.8rem; cursor: pointer; }
+        .pagination { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem; }
+        .filter-group { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; align-items: flex-end; }
+        .filter-group select, .filter-group input { padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc; }
+        @media (max-width: 768px) { .swiper { height: 250px; } }
     </style>
 </head>
 <body>
-    <!-- Top Navigation -->
-    <div class="top-nav">
-        <div><i class="fas fa-envelope"></i> bpsjateng@bps.go.id</div>
-        <div>
-            <a href="#">E-PPID</a> | 
-            <a href="#">Karir</a> | 
-            <a href="#">Peta Situs</a> | 
-            <a href="#">English</a>
-        </div>
-    </div>
-
-    <!-- Main Navigation -->
-    <div class="main-nav">
-        <div class="logo">
-            <div class="logo-icon">BPS</div>
-            <div class="logo-text">
-                <h1>BADAN PUSAT STATISTIK</h1>
-                <p>PROVINSI JAWA TENGAH</p>
-            </div>
-        </div>
+<div class="top-bar">
+    <div><i class="fas fa-map-marker-alt"></i> Jl. Imam Bagir Na'im 50, Semarang</div>
+    <div><button id="langId" class="btn-primary" style="padding:0.2rem 0.6rem;">🇮🇩</button><button id="langEn" class="btn-primary" style="padding:0.2rem 0.6rem;">🇬🇧</button></div>
+</div>
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo"><h1>BRIDA JATENG</h1></div>
         <div class="nav-links">
-            <a href="#">Beranda</a>
-            <a href="#">Rencana Terbit</a>
-            <a href="#">Produk</a>
-            <a href="#">Layanan</a>
-            <a href="#">Informasi Publik</a>
-            <div class="search-icon"><i class="fas fa-search"></i></div>
+            <a href="#" id="homeLink">Beranda</a>
+            <a href="#" id="journalLink">Jurnal</a>
+            <a href="#" id="submitLink">Kirim Naskah</a>
+            <a href="#" id="profileLink">Profil</a>
+            <a href="#" id="adminPanelLink" style="display:none;">Admin</a>
+            <a href="#" id="favoritLink"><i class="fas fa-bookmark"></i> Favorit</a>
+            <button id="darkModeToggle" class="btn-primary" style="padding:0.2rem 0.6rem;">🌙</button>
+            <button id="loginBtn" class="btn-primary">Login</button>
+            <button id="logoutBtn" class="btn-primary" style="display:none;">Logout</button>
         </div>
     </div>
+</nav>
+<section class="hero"><h2 id="heroTitle">Portal Publikasi Jurnal Provinsi Jawa Tengah</h2><p>Demo: Login dengan fuadi / curugputri</p></section>
+<div class="container" id="mainContent"></div>
+<footer style="background:#0F2E44; color:white; text-align:center; padding:2rem;"><p>© 2026 BRIDA JATENG - Versi Demo</p></footer>
 
-    <!-- Survey Banner -->
-    <div class="survey-banner">
-        <i class="fas fa-clipboard-list"></i> Sebagai upaya meningkatkan kualitas data dan pelayanan kami kepada Anda mohon mengisi 
-        <a href="https://skd.bps.go.id/skd/s/3300" target="_blank">Survei Kebutuhan Data (SKD) 2026</a>
-    </div>
+<script>
+    // ======================== AKUN DEFAULT ========================
+    const DEMO_ACCOUNTS = {
+        "fuadi": { 
+            name: "Muhammad Fuadi", 
+            email: "fuadi@brida.com", 
+            password: "curugputri", 
+            role: "admin" 
+        },
+        "user": { 
+            name: "User Biasa", 
+            email: "user@brida.com", 
+            password: "user123", 
+            role: "user" 
+        },
+        "reviewer": { 
+            name: "Reviewer", 
+            email: "reviewer@brida.com", 
+            password: "reviewer123", 
+            role: "reviewer" 
+        }
+    };
 
-    <!-- Hero Section -->
-    <div class="hero">
-        <h2>Lembaga yang Independen, Tepercaya, dan Berperan Aktif dalam Mendukung Perumusan Kebijakan Berbasis Data</h2>
-        <p>Bersama Indonesia Maju Menuju Indonesia Emas 2045</p>
-        <div class="search-box">
-            <input type="text" placeholder="Cari data statistik...">
-            <button><i class="fas fa-search"></i></button>
-        </div>
-    </div>
+    // Data artikel awal
+    let artikelList = [
+        { id: "1", judul: "Transformasi Digital UMKM di Jawa Tengah", penulis: "Muhammad Fuadi", tahun: 2025, kategori: "Ekonomi", abstrak: "Penelitian ini membahas digitalisasi UMKM di Jawa Tengah yang meningkatkan produktivitas hingga 30%.", kataKunci: "UMKM, Digital, Inovasi", sitasi: 12, akreditasi: "SINTA 2", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview: "diterima" },
+        { id: "2", judul: "AI untuk Prediksi Panen Padi", penulis: "Siti Aminah", tahun: 2026, kategori: "Teknologi", abstrak: "Model machine learning untuk pertanian presisi menggunakan data iklim dan tanah.", kataKunci: "AI, Pertanian, Prediksi", sitasi: 5, akreditasi: "SINTA 3", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview: "review" },
+        { id: "3", judul: "Kearifan Lokal Pembangunan Berkelanjutan", penulis: "Joko Widodo", tahun: 2025, kategori: "Sosial", abstrak: "Kearifan lokal sebagai fondasi pembangunan berkelanjutan di pedesaan.", kataKunci: "Kearifan, Sosial, Budaya", sitasi: 8, akreditasi: "SINTA 1", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview: "diterima" }
+    ];
 
-    <div class="container">
-        <!-- Indeks Harga Konsumen -->
-        <h3 class="section-title">Indeks Harga Konsumen</h3>
-        <div class="ihk-grid">
-            <div class="ihk-card">
-                <h4>Kota Semarang</h4>
-                <div class="value">110,16</div>
-            </div>
-            <div class="ihk-card">
-                <h4>Kota Tegal</h4>
-                <div class="value">110,34</div>
-            </div>
-            <div class="ihk-card">
-                <h4>Kab. Wonosobo</h4>
-                <div class="value">112,93</div>
-            </div>
-            <div class="ihk-card">
-                <h4>Kab. Wonogiri</h4>
-                <div class="value">111,60</div>
-            </div>
-            <div class="ihk-card">
-                <h4>Kab. Rembang</h4>
-                <div class="value">114,29</div>
-            </div>
-        </div>
+    // State
+    let currentUser = null;
+    let currentUserRole = "user";
+    let currentPage = 1;
+    let pageSize = 5;
+    let favorit = JSON.parse(localStorage.getItem('favorit')) || {};
+    let komentar = JSON.parse(localStorage.getItem('komentar')) || {};
+    let lang = "id";
+    const translations = { id: { heroTitle: "Portal Publikasi Jurnal Provinsi Jawa Tengah" }, en: { heroTitle: "Central Java Research Journal Portal" } };
 
-        <!-- Ekspor Impor Banner -->
-        <div class="trade-banner">
-            <h3><i class="fas fa-chart-line"></i> Ekspor dan Impor Jawa Tengah April 2026</h3>
-            <div class="trade-numbers">
-                <div class="trade-item">
-                    <div class="label">Ekspor</div>
-                    <div class="number">US$ 1.375,70 Juta</div>
-                </div>
-                <div class="trade-item">
-                    <div class="label">Impor</div>
-                    <div class="number">US$ 1.412,91 Juta</div>
-                </div>
-            </div>
-        </div>
+    // Helper functions
+    function saveData() {
+        localStorage.setItem('artikelList', JSON.stringify(artikelList));
+        localStorage.setItem('favorit', JSON.stringify(favorit));
+        localStorage.setItem('komentar', JSON.stringify(komentar));
+    }
 
-        <!-- 2 Kolom: Berita + Antrian -->
-        <div class="two-columns">
-            <!-- Berita Resmi Statistik -->
-            <div class="news-section">
-                <h3 class="section-title" style="margin-top:0; margin-bottom:1rem;">Berita Resmi Statistik</h3>
-                <div class="news-item">
-                    <div class="news-date">2 Juni 2026</div>
-                    <div class="news-title">Perjalanan wisatawan nusantara (wisnus) tujuan Jawa Tengah mencapai 56,49 juta perjalanan pada April 2026</div>
-                </div>
-                <div class="news-item">
-                    <div class="news-date">2 Juni 2026</div>
-                    <div class="news-title">Nilai Tukar Petani (NTP) Jawa Tengah Mei 2026 sebesar 117,39 atau naik 2,16 persen</div>
-                </div>
-                <div class="news-item">
-                    <div class="news-date">2 Juni 2026</div>
-                    <div class="news-title">Perkembangan Statistik Transportasi Jawa Tengah April 2026</div>
-                </div>
-                <div class="news-item">
-                    <div class="news-date">2 Juni 2026</div>
-                    <div class="news-title">Mei 2026 inflasi Year on Year (y-on-y) Provinsi Jawa Tengah sebesar 2,85 persen. Inflasi tertinggi terjadi di Cilacap sebesar 3,22 persen.</div>
-                </div>
-                <div class="news-item">
-                    <div class="news-date">2025</div>
-                    <div class="news-title">SUPAS 2025. Angka Kelahiran Total (TFR) di Provinsi Jawa Tengah adalah 2,05, Angka Kematian Bayi (IMR) adalah 10,88, dan persentase penduduk lansia telah mencapai 14,43 persen.</div>
-                </div>
-                <a href="#" class="btn-outline">Lihat Semua Berita →</a>
-            </div>
+    function loadSavedData() {
+        const saved = localStorage.getItem('artikelList');
+        if (saved) artikelList = JSON.parse(saved);
+        const savedFav = localStorage.getItem('favorit');
+        if (savedFav) favorit = JSON.parse(savedFav);
+        const savedKom = localStorage.getItem('komentar');
+        if (savedKom) komentar = JSON.parse(savedKom);
+    }
+    loadSavedData();
 
-            <!-- Antrian Online & Layanan -->
-            <div class="queue-section">
-                <h3 class="section-title" style="margin-top:0; margin-bottom:1rem;">Layanan Publik</h3>
-                <div class="queue-box">
-                    <i class="fas fa-ticket-alt" style="font-size: 2rem; color: #1a3c5e;"></i>
-                    <p style="margin: 0.5rem 0;">Antrian online layanan pada Pelayanan Statistik Terpadu BPS Provinsi Jawa Tengah</p>
-                    <a href="http://s.bps.go.id/antrianonlinebnsjaten" target="_blank" class="queue-link">
-                        <i class="fas fa-clock"></i> Ambil Antrian Online
-                    </a>
-                </div>
-                <div style="background: #e8f0f7; border-radius: 12px; padding: 1rem; text-align: center;">
-                    <i class="fas fa-chart-simple"></i>
-                    <p style="font-size: 0.9rem;">Statistik Terkini: Inflasi Jawa Tengah</p>
-                    <p style="font-size: 1.8rem; font-weight: 700; color: #1a3c5e;">2,85%</p>
-                    <p style="font-size: 0.75rem;">(y-on-y) Mei 2026</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    function getFavorit() {
+        if (!currentUser) return [];
+        return favorit[currentUser.email] || [];
+    }
+    function addFavorit(articleId) {
+        if (!currentUser) return;
+        if (!favorit[currentUser.email]) favorit[currentUser.email] = [];
+        if (!favorit[currentUser.email].includes(articleId)) {
+            favorit[currentUser.email].push(articleId);
+            saveData();
+        }
+    }
+    function removeFavorit(articleId) {
+        if (!currentUser) return;
+        if (favorit[currentUser.email]) {
+            favorit[currentUser.email] = favorit[currentUser.email].filter(id => id !== articleId);
+            saveData();
+        }
+    }
 
-    <!-- Menu Footer -->
-    <div class="menu-footer">
-        <a href="#">Beranda</a>
-        <a href="#">Rencana Terbit</a>
-        <a href="#">Produk</a>
-        <a href="#">Layanan</a>
-        <a href="#">Informasi Publik</a>
-        <a href="#">Tabel Statistik</a>
-        <a href="#">Publikasi</a>
-        <a href="#">Infografik</a>
-    </div>
-
-    <!-- Copyright -->
-    <div class="copyright">
-        <p>© 2026 Badan Pusat Statistik Provinsi Jawa Tengah | Jl. Pemuda No. 121, Semarang | Telp: (024) 1234567</p>
-    </div>
-
-    <script>
-        // Fungsi pencarian sederhana
-        document.querySelector('.search-box button').addEventListener('click', function() {
-            let keyword = document.querySelector('.search-box input').value;
-            if(keyword.trim() !== "") {
-                alert("Pencarian untuk: " + keyword + "\nFitur pencarian akan segera terintegrasi dengan database statistik.");
-            }
+    // AI Summarizer simulasi
+    async function aiSummarize(text) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve("Ringkasan AI: " + text.substring(0, 150) + " ... (Teknologi AI memberikan efisiensi dan akurasi tinggi dalam analisis data)");
+            }, 1000);
         });
-        document.querySelector('.search-box input').addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') {
-                document.querySelector('.search-box button').click();
-            }
+    }
+
+    // Plagiarism Check simulasi
+    async function checkPlagiarism(text) {
+        return new Promise(resolve => {
+            const similarity = Math.floor(Math.random() * 25);
+            setTimeout(() => {
+                resolve(`Tingkat kemiripan: ${similarity}% ${similarity < 20 ? '(Lolos)' : '(Perlu revisi)'}`);
+            }, 1000);
         });
-    </script>
+    }
+
+    // Render halaman utama
+    async function renderHome() {
+        const main = document.getElementById('mainContent');
+        
+        // Statistik author
+        const statsAuthor = {};
+        artikelList.forEach(art => {
+            if (!statsAuthor[art.penulis]) statsAuthor[art.penulis] = { total: 0, sitasi: 0 };
+            statsAuthor[art.penulis].total++;
+            statsAuthor[art.penulis].sitasi += art.sitasi || 0;
+        });
+
+        main.innerHTML = `
+            <div class="info-card"><h3>📊 Statistik Author</h3><ul>${Object.entries(statsAuthor).map(([n,d]) => `<li>${n}: ${d.total} artikel, total sitasi ${d.sitasi}</li>`).join('')}</ul></div>
+            <div class="additional-table">
+                <h3>📚 Daftar Jurnal</h3>
+                <div class="filter-group">
+                    <input type="text" id="filterJudul" placeholder="Judul">
+                    <input type="text" id="filterPenulis" placeholder="Penulis">
+                    <select id="filterKategori"><option value="">Semua Kategori</option><option>Ekonomi</option><option>Teknologi</option><option>Sosial</option></select>
+                    <select id="filterTahun"><option value="">Semua Tahun</option><option>2024</option><option>2025</option><option>2026</option></select>
+                    <button id="searchBtn" class="btn-primary"><i class="fas fa-search"></i> Cari</button>
+                    <button id="exportExcelBtn" class="btn-primary"><i class="fas fa-file-excel"></i> Export Excel</button>
+                </div>
+                <table><thead><tr><th>Judul</th><th>Penulis</th><th>Tahun</th><th>Kategori</th><th>Status</th><th>Favorit</th><th>Aksi</th></tr></thead><tbody id="jurnalBody"></tbody></table>
+                <div class="pagination" id="pagination"></div>
+            </div>
+            <div class="gallery-section"><h3>Galeri Kegiatan</h3><div class="swiper mySwiper"><div class="swiper-wrapper"><div class="swiper-slide"><img src="https://picsum.photos/id/20/800/400"></div><div class="swiper-slide"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div></div><div class="swiper-button-next"></div><div class="swiper-button-prev"></div></div></div>
+        `;
+        
+        await renderTable();
+        
+        document.getElementById('searchBtn').onclick = () => renderTable();
+        document.getElementById('filterJudul').onkeyup = () => renderTable();
+        document.getElementById('filterPenulis').onkeyup = () => renderTable();
+        document.getElementById('filterKategori').onchange = () => renderTable();
+        document.getElementById('filterTahun').onchange = () => renderTable();
+        
+        document.getElementById('exportExcelBtn').onclick = () => {
+            const ws = XLSX.utils.json_to_sheet(artikelList);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Jurnal");
+            XLSX.writeFile(wb, "jurnal_brida.xlsx");
+        };
+        
+        new Swiper('.mySwiper', { loop: true, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, autoplay: { delay: 3000 } });
+    }
+
+    async function renderTable() {
+        const tbody = document.getElementById('jurnalBody');
+        tbody.innerHTML = '';
+        
+        const judul = document.getElementById('filterJudul')?.value.toLowerCase() || '';
+        const penulis = document.getElementById('filterPenulis')?.value.toLowerCase() || '';
+        const kategori = document.getElementById('filterKategori')?.value || '';
+        const tahun = document.getElementById('filterTahun')?.value || '';
+        
+        let filtered = artikelList.filter(art => {
+            let match = true;
+            if (judul) match = match && (art.judul.toLowerCase().includes(judul) || (art.kataKunci || '').toLowerCase().includes(judul));
+            if (penulis) match = match && art.penulis.toLowerCase().includes(penulis);
+            if (kategori && kategori !== "") match = match && art.kategori === kategori;
+            if (tahun && tahun !== "") match = match && art.tahun == tahun;
+            return match;
+        });
+        
+        const start = (currentPage - 1) * pageSize;
+        const paginated = filtered.slice(start, start + pageSize);
+        const favoritIds = getFavorit();
+        
+        paginated.forEach(art => {
+            const isFav = favoritIds.includes(art.id);
+            const row = tbody.insertRow();
+            row.insertCell(0).innerText = art.judul;
+            row.insertCell(1).innerText = art.penulis;
+            row.insertCell(2).innerText = art.tahun;
+            row.insertCell(3).innerText = art.kategori || "-";
+            row.insertCell(4).innerHTML = `<span style="background:${art.statusReview==='diterima'?'#10b981':art.statusReview==='ditolak'?'#ef4444':'#f59e0b'}; color:white; padding:0.2rem 0.6rem; border-radius:20px;">${art.statusReview || 'review'}</span>`;
+            row.insertCell(5).innerHTML = `<button class="favBtn" data-id="${art.id}" style="background:none; border:none; cursor:pointer; color:${isFav?'#FFB347':'#94A3B8'}"><i class="fas fa-bookmark"></i></button>`;
+            row.insertCell(6).innerHTML = `<button class="btn-primary viewArticle" data-id="${art.id}">Detail</button>`;
+        });
+        
+        document.querySelectorAll('.viewArticle').forEach(btn => btn.addEventListener('click', (e) => showArticleDetail(btn.dataset.id)));
+        document.querySelectorAll('.favBtn').forEach(btn => btn.addEventListener('click', async (e) => {
+            const id = btn.dataset.id;
+            if (getFavorit().includes(id)) removeFavorit(id);
+            else addFavorit(id);
+            renderTable();
+        }));
+        
+        const totalPages = Math.ceil(filtered.length / pageSize);
+        const pagDiv = document.getElementById('pagination');
+        pagDiv.innerHTML = `
+            <button id="prevPage" ${currentPage === 1 ? 'disabled' : ''}>◀ Prev</button>
+            <span> Halaman ${currentPage} dari ${totalPages || 1} </span>
+            <button id="nextPage" ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}>Next ▶</button>
+        `;
+        document.getElementById('prevPage')?.addEventListener('click', () => { if (currentPage > 1) { currentPage--; renderTable(); } });
+        document.getElementById('nextPage')?.addEventListener('click', () => { if (currentPage < totalPages) { currentPage++; renderTable(); } });
+    }
+
+    async function showArticleDetail(id) {
+        const art = artikelList.find(a => a.id === id);
+        if (!art) return;
+        
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>${DOMPurify.sanitize(art.judul)}</h2>
+                <p><strong>Penulis:</strong> ${art.penulis} | <strong>Tahun:</strong> ${art.tahun} | <strong>Kategori:</strong> ${art.kategori}</p>
+                <p><strong>Abstrak:</strong> ${art.abstrak}</p>
+                <div><button id="aiSummaryBtn" class="btn-primary"><i class="fas fa-robot"></i> AI Ringkasan</button> <span id="summaryResult"></span></div>
+                <div><button id="plagiarismBtn" class="btn-primary"><i class="fas fa-search"></i> Cek Plagiarisme</button> <span id="plagResult"></span></div>
+                <canvas id="citationChart" width="300" height="150"></canvas>
+                <div><button id="ttsBtn" class="btn-primary"><i class="fas fa-volume-up"></i> Bacakan Abstrak</button></div>
+                <div><div id="qrcode"></div></div>
+                <div><a href="${art.pdfUrl}" target="_blank" class="btn-primary"><i class="fas fa-file-pdf"></i> Download PDF</a></div>
+                <div><a href="#" id="googleScholarLink" class="btn-primary">Cari di Google Scholar</a></div>
+                ${(currentUserRole === 'admin' || currentUserRole === 'reviewer') ? `
+                    <div><h4>Manajemen Review</h4>
+                    <select id="statusSelect">
+                        <option ${art.statusReview==='review'?'selected':''}>review</option>
+                        <option ${art.statusReview==='diterima'?'selected':''}>diterima</option>
+                        <option ${art.statusReview==='ditolak'?'selected':''}>ditolak</option>
+                    </select>
+                    <button id="updateStatusBtn" class="btn-primary">Update Status</button>
+                    <button id="deleteArticleBtn" class="btn-primary btn-danger" style="background:#dc2626;">Hapus Artikel</button>
+                    </div>
+                ` : ''}
+                <div><h4>Komentar & Diskusi</h4><div id="komentarList"></div><textarea id="komentarInput" placeholder="Tulis komentar..." rows="2" style="width:100%; margin:0.5rem 0; padding:0.5rem;"></textarea><button id="submitKomentar" class="btn-primary">Kirim Komentar</button></div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector('.close-modal').onclick = () => modal.remove();
+        
+        // AI Summarizer
+        document.getElementById('aiSummaryBtn').onclick = async () => {
+            document.getElementById('summaryResult').innerHTML = "⏳ Sedang meringkas...";
+            const result = await aiSummarize(art.abstrak);
+            document.getElementById('summaryResult').innerHTML = result;
+        };
+        
+        // Plagiarism Check
+        document.getElementById('plagiarismBtn').onclick = async () => {
+            document.getElementById('plagResult').innerHTML = "⏳ Memeriksa kemiripan...";
+            const result = await checkPlagiarism(art.abstrak);
+            document.getElementById('plagResult').innerHTML = result;
+        };
+        
+        // Grafik sitasi
+        new Chart(document.getElementById('citationChart'), { 
+            type: 'line', 
+            data: { 
+                labels: [2022,2023,2024,2025,2026], 
+                datasets: [{ label: 'Sitasi per Tahun', data: [2,5,8,12,art.sitasi||5], borderColor: '#2C5F8A', fill: false }] 
+            } 
+        });
+        
+        // Text-to-Speech
+        document.getElementById('ttsBtn').onclick = () => {
+            const utterance = new SpeechSynthesisUtterance(art.abstrak);
+            speechSynthesis.speak(utterance);
+        };
+        
+        // QR Code
+        new QRCode(document.getElementById('qrcode'), { text: window.location.href + "?article=" + art.id, width: 128, height: 128 });
+        
+        // Google Scholar
+        document.getElementById('googleScholarLink').onclick = (e) => {
+            e.preventDefault();
+            window.open(`https://scholar.google.com/scholar?q=${encodeURIComponent(art.judul)}`);
+        };
+        
+        // Admin/Reviewer actions
+        if (currentUserRole === 'admin' || currentUserRole === 'reviewer') {
+            document.getElementById('updateStatusBtn').onclick = () => {
+                const newStatus = document.getElementById('statusSelect').value;
+                art.statusReview = newStatus;
+                saveData();
+                alert(`Status artikel "${art.judul}" diperbarui menjadi ${newStatus}`);
+                modal.remove();
+                renderHome();
+            };
+            document.getElementById('deleteArticleBtn').onclick = () => {
+                if (confirm(`Hapus artikel "${art.judul}"?`)) {
+                    const index = artikelList.findIndex(a => a.id === art.id);
+                    if (index !== -1) artikelList.splice(index, 1);
+                    saveData();
+                    alert("Artikel dihapus");
+                    modal.remove();
+                    renderHome();
+                }
+            };
+        }
+        
+        // Komentar
+        if (!komentar[art.id]) komentar[art.id] = [];
+        function renderKomentar() {
+            const komentarDiv = document.getElementById('komentarList');
+            komentarDiv.innerHTML = komentar[art.id].map(k => `<p><strong>${k.nama}:</strong> ${DOMPurify.sanitize(k.isi)} <span style="font-size:0.7rem; color:#94A3B8;">(${k.waktu})</span></p>`).join('');
+        }
+        renderKomentar();
+        document.getElementById('submitKomentar').onclick = () => {
+            const isi = document.getElementById('komentarInput').value;
+            if (!isi.trim()) { alert("Isi komentar dulu"); return; }
+            if (!currentUser) { alert("Login dulu untuk berkomentar"); return; }
+            komentar[art.id].push({ nama: currentUser.name || currentUser.email, isi: DOMPurify.sanitize(isi), waktu: new Date().toLocaleString() });
+            saveData();
+            renderKomentar();
+            document.getElementById('komentarInput').value = '';
+        };
+    }
+
+    // Profil peneliti
+    async function showProfile() {
+        if (!currentUser) { alert("Login dulu"); return; }
+        const userEmail = currentUser.email;
+        const articles = artikelList.filter(a => a.penulis === currentUser.name || a.penulis === userEmail);
+        const totalSitasi = articles.reduce((s, a) => s + (a.sitasi || 0), 0);
+        const hIndex = articles.filter(a => (a.sitasi || 0) >= articles.length).length;
+        const sitasiPerTahun = { 2022:0,2023:0,2024:0,2025:0,2026:0 };
+        articles.forEach(a => { sitasiPerTahun[a.tahun] = (sitasiPerTahun[a.tahun] || 0) + (a.sitasi || 0); });
+        
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3><i class="fas fa-user-circle"></i> Profil Peneliti</h3>
+                <p><strong>Nama:</strong> ${currentUser.name || currentUser.email}</p>
+                <p><strong>Email:</strong> ${currentUser.email}</p>
+                <p><strong>Role:</strong> ${currentUserRole}</p>
+                <p><strong>Total Artikel:</strong> ${articles.length}</p>
+                <p><strong>Total Sitasi:</strong> ${totalSitasi}</p>
+                <p><strong>h-index:</strong> ${hIndex}</p>
+                <canvas id="profileChart" width="300" height="150"></canvas>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector('.close-modal').onclick = () => modal.remove();
+        new Chart(document.getElementById('profileChart'), { type: 'bar', data: { labels: Object.keys(sitasiPerTahun), datasets: [{ label: 'Sitasi per Tahun', data: Object.values(sitasiPerTahun), backgroundColor: '#2C5F8A' }] } });
+    }
+
+    // Form kirim naskah
+    function showSubmitForm() {
+        if (!currentUser) { alert("Login dulu untuk kirim naskah"); return; }
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Kirim Naskah Baru</h3>
+                <form id="naskahForm">
+                    <div class="filter-group" style="flex-direction:column;">
+                        <input id="judul" placeholder="Judul Artikel" required style="width:100%;">
+                        <input id="penulis" placeholder="Nama Penulis" value="${currentUser.name || ''}" required style="width:100%;">
+                        <input id="tahun" type="number" placeholder="Tahun" required style="width:100%;">
+                        <select id="kategori" required style="width:100%;"><option>Ekonomi</option><option>Teknologi</option><option>Sosial</option></select>
+                        <textarea id="abstrak" placeholder="Abstrak" rows="3" required style="width:100%;"></textarea>
+                        <input id="kataKunci" placeholder="Kata Kunci (pisah koma)" style="width:100%;">
+                        <input type="file" id="filePDF" accept=".pdf" required style="width:100%;">
+                        <button type="submit" class="btn-primary">Kirim Naskah</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector('.close-modal').onclick = () => modal.remove();
+        
+        document.getElementById('naskahForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newId = String(Date.now());
+            const newArticle = {
+                id: newId,
+                judul: document.getElementById('judul').value,
+                penulis: document.getElementById('penulis').value,
+                tahun: parseInt(document.getElementById('tahun').value),
+                kategori: document.getElementById('kategori').value,
+                abstrak: document.getElementById('abstrak').value,
+                kataKunci: document.getElementById('kataKunci').value,
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                sitasi: 0,
+                statusReview: "review"
+            };
+            artikelList.unshift(newArticle);
+            saveData();
+            alert("Naskah berhasil dikirim! Menunggu review.");
+            modal.remove();
+            renderHome();
+        });
+    }
+
+    // Admin panel
+    async function showAdminPanel() {
+        if (currentUserRole !== 'admin') { alert("Hanya admin yang bisa akses panel ini"); return; }
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Panel Admin</h3>
+                <button id="exportLaporanBtn" class="btn-primary">Export Laporan Bulanan (PDF)</button>
+                <button id="genSitemapBtn" class="btn-primary">Generate Sitemap XML</button>
+                <button id="resetDataBtn" class="btn-primary btn-danger" style="background:#dc2626;">Reset Data ke Default</button>
+                <hr style="margin:1rem 0;">
+                <h4>Kelola Reviewer</h4>
+                <input type="email" id="reviewerEmail" placeholder="Email Reviewer">
+                <button id="addReviewerBtn" class="btn-primary">Tambah Reviewer</button>
+                <div id="reviewerList"></div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector('.close-modal').onclick = () => modal.remove();
+        
+        document.getElementById('exportLaporanBtn').onclick = async () => {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            pdf.text("Laporan Bulanan BRIDA JATENG", 10, 10);
+            pdf.text(`Total artikel: ${artikelList.length}`, 10, 20);
+            let y = 30;
+            artikelList.slice(0, 15).forEach((a, i) => { pdf.text(`${i+1}. ${a.judul} (${a.penulis})`, 10, y); y += 8; });
+            pdf.save("laporan_bulanan.pdf");
+        };
+        
+        document.getElementById('genSitemapBtn').onclick = () => {
+            let sitemap = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+            sitemap += `<url><loc>${window.location.origin}</loc></url>`;
+            artikelList.forEach(a => { sitemap += `<url><loc>${window.location.origin}?article=${a.id}</loc></url>`; });
+            sitemap += '</urlset>';
+            const blob = new Blob([sitemap], {type: 'application/xml'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = 'sitemap.xml'; a.click();
+            URL.revokeObjectURL(url);
+        };
+        
+        document.getElementById('resetDataBtn').onclick = () => {
+            if (confirm("Reset semua data ke default? Data yang ada akan hilang!")) {
+                artikelList = [
+                    { id: "1", judul: "Transformasi Digital UMKM di Jawa Tengah", penulis: "Muhammad Fuadi", tahun: 2025, kategori: "Ekonomi", abstrak: "Penelitian ini membahas digitalisasi UMKM di Jawa Tengah yang meningkatkan produktivitas hingga 30%.", kataKunci: "UMKM, Digital, Inovasi", sitasi: 12, akreditasi: "SINTA 2", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview: "diterima" },
+                    { id: "2", judul: "AI untuk Prediksi Panen Padi", penulis: "Siti Aminah", tahun: 2026, kategori: "Teknologi", abstrak: "Model machine learning untuk pertanian presisi menggunakan data iklim dan tanah.", kataKunci: "AI, Pertanian, Prediksi", sitasi: 5, akreditasi: "SINTA 3", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview: "review" }
+                ];
+                saveData();
+                alert("Data telah direset");
+                modal.remove();
+                renderHome();
+            }
+        };
+        
+        document.getElementById('addReviewerBtn').onclick = () => {
+            const email = document.getElementById('reviewerEmail').value;
+            if (email) {
+                DEMO_ACCOUNTS[email.split('@')[0]] = { name: email.split('@')[0], email: email, password: "default123", role: "reviewer" };
+                alert(`Reviewer ${email} ditambahkan (password: default123)`);
+                document.getElementById('reviewerEmail').value = '';
+                loadReviewers();
+            }
+        };
+        
+        function loadReviewers() {
+            const reviewers = Object.entries(DEMO_ACCOUNTS).filter(([k,v]) => v.role === 'reviewer');
+            document.getElementById('reviewerList').innerHTML = reviewers.map(([k,v]) => `<p>${v.email} (${v.role})</p>`).join('');
+        }
+        loadReviewers();
+    }
+
+    // Show favorit list
+    async function showFavoritList() {
+        if (!currentUser) { alert("Login dulu"); return; }
+        const favIds = getFavorit();
+        if (favIds.length === 0) { alert("Belum ada artikel favorit"); return; }
+        const favArticles = artikelList.filter(a => favIds.includes(a.id));
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+        modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>📋 Artikel Favorit Anda</h3><ul>${favArticles.map(a => `<li><a href="#" class="favArticleLink" data-id="${a.id}">${a.judul}</a> (${a.penulis})</li>`).join('')}</ul></div>`;
+        document.body.appendChild(modal);
+        modal.querySelector('.close-modal').onclick = () => modal.remove();
+        document.querySelectorAll('.favArticleLink').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); const id = link.dataset.id; modal.remove(); showArticleDetail(id); }));
+    }
+
+    // Login/Register modal
+    function showAuthModal() {
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>🔐 Login / Daftar</h3>
+                <div class="filter-group" style="flex-direction:column;">
+                    <input type="text" id="authUsername" placeholder="Username (fuadi / user / reviewer)" style="width:100%;">
+                    <input type="password" id="authPassword" placeholder="Password" style="width:100%;">
+                    <small>Akun demo: fuadi / curugputri (admin) | user / user123 | reviewer / reviewer123</small>
+                    <button id="loginAuthBtn" class="btn-primary">Login</button>
+                    <button id="registerAuthBtn" class="btn-primary">Daftar Baru</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector('.close-modal').onclick = () => modal.remove();
+        
+        document.getElementById('loginAuthBtn').onclick = () => {
+            const username = document.getElementById('authUsername').value;
+            const password = document.getElementById('authPassword').value;
+            const account = DEMO_ACCOUNTS[username];
+            if (account && account.password === password) {
+                currentUser = { name: account.name, email: account.email, uid: account.email };
+                currentUserRole = account.role;
+                alert(`Login berhasil! Selamat datang ${account.name} (${account.role})`);
+                modal.remove();
+                const loginBtn = document.getElementById('loginBtn');
+                const logoutBtn = document.getElementById('logoutBtn');
+                const adminLink = document.getElementById('adminPanelLink');
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline-block';
+                if (currentUserRole === 'admin') adminLink.style.display = 'inline-block';
+                else adminLink.style.display = 'none';
+                renderHome();
+            } else {
+                alert("Username atau password salah! Gunakan: fuadi / curugputri");
+            }
+        };
+        
+        document.getElementById('registerAuthBtn').onclick = () => {
+            const username = document.getElementById('authUsername').value;
+            const password = document.getElementById('authPassword').value;
+            if (!username || !password) { alert("Isi username dan password"); return; }
+            if (DEMO_ACCOUNTS[username]) { alert("Username sudah ada"); return; }
+            DEMO_ACCOUNTS[username] = { name: username, email: `${username}@brida.com`, password: password, role: "user" };
+            alert(`Akun ${username} berhasil didaftarkan! Silakan login.`);
+        };
+    }
+
+    // Event listeners
+    document.getElementById('langId').onclick = () => { lang='id'; document.getElementById('heroTitle').innerText = translations.id.heroTitle; };
+    document.getElementById('langEn').onclick = () => { lang='en'; document.getElementById('heroTitle').innerText = translations.en.heroTitle; };
+    document.getElementById('homeLink').onclick = (e) => { e.preventDefault(); renderHome(); };
+    document.getElementById('journalLink').onclick = (e) => { e.preventDefault(); renderHome(); };
+    document.getElementById('submitLink').onclick = (e) => { e.preventDefault(); showSubmitForm(); };
+    document.getElementById('profileLink').onclick = (e) => { e.preventDefault(); showProfile(); };
+    document.getElementById('adminPanelLink').onclick = (e) => { e.preventDefault(); showAdminPanel(); };
+    document.getElementById('favoritLink').onclick = (e) => { e.preventDefault(); showFavoritList(); };
+    document.getElementById('darkModeToggle').onclick = () => document.body.classList.toggle('dark-mode');
+    document.getElementById('loginBtn').onclick = showAuthModal;
+    document.getElementById('logoutBtn').onclick = () => {
+        currentUser = null;
+        currentUserRole = "user";
+        document.getElementById('loginBtn').style.display = 'inline-block';
+        document.getElementById('logoutBtn').style.display = 'none';
+        document.getElementById('adminPanelLink').style.display = 'none';
+        renderHome();
+        alert("Logout berhasil");
+    };
+    
+    renderHome();
+</script>
 </body>
 </html>
