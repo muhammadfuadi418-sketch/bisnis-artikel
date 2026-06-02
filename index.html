@@ -1,39 +1,62 @@
-<!-- Gaya Tambahan untuk Tombol (Taruh di dalam <style> bagian atas) -->
-<style>
-    .social-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        margin: 5px;
-        background-color: #ffffff;
-        color: #1a237e;
-        text-decoration: none;
-        border-radius: 25px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-    .social-btn:hover {
-        background-color: #ffca28;
-        transform: scale(1.1);
-    }
-</style>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight Bisnis Digital | Profesional</title>
+    <style>
+        /* Reset & Global */
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; color: #fff; background: #000; }
+        
+        /* Navigasi */
+        nav { padding: 20px; text-align: center; background: rgba(0,0,0,0.5); position: absolute; width: 100%; z-index: 10; }
+        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+        nav a:hover { color: #ffca28; }
 
-<!-- Bagian Footer dengan Tombol -->
-<footer>
-    <div class="footer-section">
-        <h3>Tentang Kami</h3>
-        <p>Platform publikasi independen untuk pengembangan ilmu pengetahuan dan bisnis.</p>
-    </div>
-    
-    <div class="footer-section">
-        <h3>Hubungi Kami</h3>
-        <!-- Pastikan ganti nomor dan username Anda -->
-        <a href="https://wa.me/62882007027443" target="_blank" class="social-btn">WhatsApp</a>
-        <a href="https://instagram.com/javaexprest.27" target="_blank" class="social-btn">Instagram</a>
-        <a href="https://tiktok.com/@archiles_.27" target="_blank" class="social-btn">TikTok</a>
+        /* Hero Section */
+        .hero { 
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center; text-align: center; padding: 20px;
+        }
+        .container { max-width: 800px; padding: 40px; background: rgba(255,255,255,0.1); border-radius: 15px; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.2); }
+        h1 { font-size: 3rem; margin-bottom: 20px; }
+        
+        /* Tombol Sosial Media */
+        .btn { display: inline-block; padding: 12px 25px; margin: 10px; background: #ffca28; color: #000; text-decoration: none; border-radius: 25px; font-weight: bold; transition: 0.3s; }
+        .btn:hover { background: #fff; transform: scale(1.1); }
+
+        /* Footer */
+        footer { background: #1a237e; color: white; padding: 40px 20px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasi -->
+    <nav>
+        <a href="#">Beranda</a>
+        <a href="#">Artikel</a>
+        <a href="#">Tentang</a>
+    </nav>
+
+    <!-- Bagian Utama -->
+    <div class="hero">
+        <div class="container">
+            <h1>Insight Bisnis Digital</h1>
+            <p>Eksplorasi mendalam tentang ekonomi digital, strategi bisnis, dan tren pasar terkini untuk profesional masa depan.</p>
+            
+            <!-- Tombol Otomatis -->
+            <a href="https://wa.me/62882007027443" target="_blank" class="btn">WhatsApp</a>
+            <a href="https://instagram.com/javaexprest.27" target="_blank" class="btn">Instagram</a>
+            <a href="https://tiktok.com/@archiles_.27" target="_blank" class="btn">TikTok</a>
+        </div>
     </div>
 
-    <div class="footer-section">
-        <h3>Alamat</h3>
-        <p>Bogor, Jawa Tengah<br>Indonesia</p>
-    </div>
-</footer>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Insight Bisnis Digital. Dikelola oleh Muhammad Fuadi.</p>
+        <p>Purworejo, Jawa Tengah, Indonesia</p>
+    </footer>
+
+</body>
+</html>
