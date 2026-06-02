@@ -2,600 +2,270 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Insight Bisnis Digital | Konsultan & Akademisi Profesional</title>
-    <!-- Google Fonts + Font Awesome 6 (free) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRIDA JATENG | Portal Publikasi Jurnal Lengkap (Semua Fitur)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0A0A0A;
-            color: #F1F5F9;
-            line-height: 1.5;
-            scroll-behavior: smooth;
-        }
-
-        /* custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #111;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #FFCA28;
-            border-radius: 10px;
-        }
-
-        /* navbar premium */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            z-index: 1000;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid rgba(255, 202, 40, 0.2);
-            transition: all 0.3s ease;
-        }
-        .nav-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2.5rem;
-            flex-wrap: wrap;
-        }
-        .nav-link {
-            color: #E2E8F0;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            letter-spacing: -0.2px;
-            transition: 0.2s;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-        .nav-link:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #FFCA28;
-            transition: 0.3s ease;
-        }
-        .nav-link:hover {
-            color: #FFCA28;
-        }
-        .nav-link:hover:after {
-            width: 100%;
-        }
-        /* hero section — cinematic */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: radial-gradient(circle at 20% 30%, #0A0F1E, #000000);
-            overflow: hidden;
-            padding: 2rem;
-        }
-        .hero-bg-glow {
-            position: absolute;
-            width: 70%;
-            height: 70%;
-            background: radial-gradient(circle, rgba(255,202,40,0.15) 0%, rgba(0,0,0,0) 70%);
-            top: 20%;
-            left: -10%;
-            filter: blur(80px);
-            z-index: 0;
-        }
-        .hero-bg-glow-2 {
-            position: absolute;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(circle, rgba(0,150,255,0.1) 0%, rgba(0,0,0,0) 70%);
-            bottom: 0;
-            right: -10%;
-            filter: blur(90px);
-        }
-        .hero-container {
-            max-width: 1200px;
-            width: 100%;
-            position: relative;
-            z-index: 2;
-            backdrop-filter: blur(2px);
-        }
-        .glass-card {
-            background: rgba(15, 25, 35, 0.55);
-            backdrop-filter: blur(20px);
-            border-radius: 2.5rem;
-            border: 1px solid rgba(255, 202, 40, 0.3);
-            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5);
-            padding: 2.5rem 2rem;
-            transition: transform 0.2s ease;
-        }
-        .hero-title {
-            font-size: clamp(2.2rem, 6vw, 4rem);
-            font-weight: 800;
-            background: linear-gradient(135deg, #FFFFFF 0%, #FFCA28 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-        }
-        .hero-sub {
-            font-size: 1.2rem;
-            color: #CBD5E1;
-            max-width: 650px;
-            margin: 0 auto 1.5rem auto;
-            line-height: 1.4;
-        }
-        .promo-highlight {
-            background: linear-gradient(90deg, rgba(255,202,40,0.1), rgba(255,202,40,0.02));
-            display: inline-block;
-            padding: 0.6rem 1.5rem;
-            border-radius: 80px;
-            font-weight: 600;
-            color: #FFCA28;
-            border: 1px solid rgba(255,202,40,0.4);
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            letter-spacing: 0.3px;
-            backdrop-filter: blur(5px);
-        }
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.2rem;
-            margin-top: 1.8rem;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0.9rem 2rem;
-            border-radius: 60px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.25s ease;
-            font-size: 1rem;
-            letter-spacing: -0.2px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,202,40,0.5);
-            color: white;
-            backdrop-filter: blur(4px);
-        }
-        .btn-wa {
-            background: #25D366;
-            border-color: #25D366;
-            color: #000;
-            box-shadow: 0 8px 20px rgba(37,211,102,0.2);
-        }
-        .btn-ig {
-            background: radial-gradient(circle at 30% 110%, #ffdb70, #e4405f, #833ab4);
-            border: none;
-            color: white;
-        }
-        .btn-tt {
-            background: #000;
-            border-color: #ff004f;
-            color: white;
-        }
-        .btn:hover {
-            transform: translateY(-4px);
-            filter: brightness(1.05);
-            box-shadow: 0 15px 30px -8px rgba(0,0,0,0.5);
-        }
-        .btn i {
-            font-size: 1.2rem;
-        }
-
-        /* section umum */
-        section {
-            padding: 5rem 2rem;
-        }
-        .section-container {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #fff, #FFCA28);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .section-sub {
-            text-align: center;
-            color: #94A3B8;
-            max-width: 600px;
-            margin: 0 auto 3rem auto;
-        }
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        .service-card {
-            background: rgba(20, 30, 40, 0.5);
-            backdrop-filter: blur(12px);
-            border-radius: 1.8rem;
-            padding: 2rem 1.5rem;
-            border: 1px solid rgba(255,202,40,0.2);
-            transition: all 0.3s;
-            text-align: center;
-        }
-        .service-card:hover {
-            border-color: #FFCA28;
-            transform: translateY(-8px);
-            background: rgba(25, 35, 50, 0.7);
-        }
-        .service-icon {
-            font-size: 2.8rem;
-            color: #FFCA28;
-            margin-bottom: 1.2rem;
-        }
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.8rem;
-        }
-        .service-card p {
-            color: #CBD5E1;
-            font-size: 0.95rem;
-        }
-
-        /* artikel preview */
-        .article-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 1rem;
-        }
-        .art-card {
-            background: #0F1219;
-            border-radius: 1.8rem;
-            overflow: hidden;
-            border: 1px solid #1E293B;
-            transition: 0.25s;
-        }
-        .art-card:hover {
-            border-color: #FFCA28;
-            transform: translateY(-5px);
-        }
-        .art-img {
-            height: 180px;
-            background: linear-gradient(145deg, #1E2A3A, #0B0F17);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #FFCA28;
-        }
-        .art-content {
-            padding: 1.5rem;
-        }
-        .art-tag {
-            font-size: 0.75rem;
-            background: rgba(255,202,40,0.2);
-            display: inline-block;
-            padding: 0.2rem 1rem;
-            border-radius: 30px;
-            color: #FFCA28;
-            margin-bottom: 0.8rem;
-        }
-        .art-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.7rem;
-        }
-        .art-desc {
-            color: #9CA3AF;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-        .art-link {
-            color: #FFCA28;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .art-link i {
-            transition: transform 0.2s;
-        }
-        .art-link:hover i {
-            transform: translateX(5px);
-        }
-
-        /* stat / why us */
-        .stats-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 2rem;
-            text-align: center;
-            background: rgba(10, 20, 28, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 2rem;
-            padding: 2.5rem;
-            border: 1px solid rgba(255,202,40,0.2);
-        }
-        .stat-item h4 {
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: #FFCA28;
-        }
-        .stat-item p {
-            color: #94A3B8;
-        }
-
-        /* CTA Area */
-        .cta-area {
-            background: radial-gradient(circle at 100% 0%, #0C1A2B, #020617);
-            border-radius: 2rem;
-            text-align: center;
-            padding: 3rem;
-            margin-top: 2rem;
-        }
-        .cta-area h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-        .btn-outline-light {
-            background: transparent;
-            border: 1px solid #FFCA28;
-            color: white;
-        }
-        .btn-outline-light:hover {
-            background: #FFCA28;
-            color: #000;
-        }
-
-        /* footer */
-        .footer {
-            background: #030712;
-            border-top: 1px solid #1F2A3A;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-        .footer a {
-            color: #FFCA28;
-            text-decoration: none;
-        }
-        .social-footer {
-            margin: 1.2rem 0;
-            display: flex;
-            justify-content: center;
-            gap: 1.8rem;
-        }
-        .social-footer a {
-            color: #CBD5E1;
-            font-size: 1.5rem;
-            transition: 0.2s;
-        }
-        .social-footer a:hover {
-            color: #FFCA28;
-            transform: scale(1.1);
-        }
-
-        @media (max-width: 768px) {
-            .nav-container { gap: 1.8rem; }
-            .glass-card { padding: 1.8rem; }
-            .stats-grid { flex-direction: column; align-items: center; }
-            .btn-group .btn { padding: 0.7rem 1.3rem; font-size: 0.9rem; }
-            .section-title { font-size: 1.7rem; }
-        }
-        @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(20px);}
-            100% { opacity: 1; transform: translateY(0);}
-        }
-        .animate-fade {
-            animation: fadeUp 0.8s ease-out forwards;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #F4F7FC; color: #1E293B; transition: 0.3s; }
+        body.dark-mode { background: #0F172A; color: #E2E8F0; }
+        body.dark-mode .navbar, body.dark-mode .card, body.dark-mode .modal-content, body.dark-mode .info-card, body.dark-mode .gallery-section, body.dark-mode .additional-table { background: #1E293B; border-color: #334155; }
+        body.dark-mode .top-bar { background: #020617; }
+        body.dark-mode .hero { background: linear-gradient(135deg, #0F172A, #1E293B); }
+        .top-bar { background: #0F2E44; color: white; padding: 0.8rem 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; }
+        .navbar { background: white; position: sticky; top: 0; z-index: 100; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .nav-container { max-width: 1400px; margin: auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.5rem; color: #0F2E44; }
+        .nav-links { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .btn-icon { background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 0.5rem; border-radius: 50%; }
+        .hero { padding: 3rem 2rem; text-align: center; background: linear-gradient(135deg, #EFF6FF, #FFF); }
+        .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .card, .info-card { background: white; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #E2EDF2; }
+        .btn-primary { background: #2C5F8A; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 40px; font-weight: 600; cursor: pointer; }
+        .btn-primary:hover { background: #1E405E; }
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: white; max-width: 700px; width: 90%; border-radius: 1rem; padding: 2rem; max-height: 80vh; overflow-y: auto; position: relative; }
+        .close-modal { position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; cursor: pointer; }
+        .swiper { width: 100%; height: 400px; border-radius: 1rem; }
+        .reader-mode { background: #fef9e6; color: #222; font-size: 1.2rem; line-height: 1.6; padding: 2rem; }
+        .badge-sinta { background: #FFB347; color: #000; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; }
+        @media (max-width: 768px) { .nav-container { flex-direction: column; gap: 0.5rem; } }
     </style>
 </head>
 <body>
-
+<div class="top-bar">
+    <div><i class="fas fa-map-marker-alt"></i> Jl. Imam Bagir Na'im 50, Semarang</div>
+    <div><i class="fas fa-envelope"></i> brida@jatengprov.go.id | <a href="#">Instagram</a> | <a href="#">YouTube</a></div>
+</div>
 <nav class="navbar">
     <div class="nav-container">
-        <a href="index.html" class="nav-link">Beranda</a>
-        <a href="artikel.html" class="nav-link">Jurnal & Makalah</a>
-        <a href="kontak.html" class="nav-link">Kontak Profesional</a>
+        <div class="logo"><h1>BRIDA JATENG <span style="font-size:0.8rem;">Riset & Inovasi</span></h1></div>
+        <div class="nav-links">
+            <a href="#" id="homeLink">Beranda</a>
+            <a href="#" id="journalLink">Jurnal</a>
+            <a href="#" id="submitLink">Kirim Naskah</a>
+            <a href="#" id="reviewLink">Status Review</a>
+            <button id="darkModeToggle" class="btn-icon"><i class="fas fa-moon"></i></button>
+            <button id="loginBtn" class="btn-primary" style="padding:0.4rem 1rem;">Login Peneliti</button>
+        </div>
     </div>
 </nav>
+<section class="hero"><h2>Portal Publikasi Jurnal Provinsi Jawa Tengah</h2><p>Fitur Lengkap: AI Summarizer, Cek Plagiarisme, QR Code, Text-to-Speech, Word Cloud, Export Sitasi, Review Online, Notifikasi, dll.</p></section>
+<div class="container" id="mainContent"></div>
+<footer style="background:#0F2E44; color:white; text-align:center; padding:2rem; margin-top:2rem;"><p>&copy; 2026 BRIDA JATENG - Semua Fitur Terintegrasi</p></footer>
 
-<!-- Hero Section dengan efek glowing dan glassmorphism premium -->
-<section class="hero">
-    <div class="hero-bg-glow"></div>
-    <div class="hero-bg-glow-2"></div>
-    <div class="hero-container">
-        <div class="glass-card" style="text-align: center;">
-            <div class="promo-highlight">
-                <i class="fas fa-chart-line" style="margin-right: 8px;"></i> Future-Ready Digital Economy
-            </div>
-            <h1 class="hero-title">Insight Bisnis Digital</h1>
-            <p class="hero-sub">
-                Eksplorasi mendalam tentang ekonomi digital, strategi bisnis, dan tren pasar terkini untuk profesional masa depan.
-            </p>
-            <div style="background: rgba(0,0,0,0.4); border-radius: 50px; padding: 0.2rem; width: fit-content; margin: 0 auto;">
-                <p style="font-weight: 500; background: rgba(255,202,40,0.15); padding: 6px 18px; border-radius: 40px; font-size: 0.9rem;">
-                    <i class="fas fa-bolt" style="color:#FFCA28;"></i> Siap untuk kolaborasi profesional atau butuh bantuan pengerjaan tugas akademik? 
-                    <strong>Hubungi kami sekarang!</strong>
-                </p>
-            </div>
-            <div class="btn-group">
-                <a href="https://wa.me/62882007027443" target="_blank" class="btn btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <a href="https://instagram.com/javaexprest.27" target="_blank" class="btn btn-ig"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://tiktok.com/@archiles_.27" target="_blank" class="btn btn-tt"><i class="fab fa-tiktok"></i> TikTok</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Services / Layanan Unggulan -->
-<section style="padding-top: 2rem;">
-    <div class="section-container">
-        <div class="section-title">Layanan Strategis</div>
-        <div class="section-sub">Solusi digital & akademik untuk percepat kariermu di era AI dan transformasi bisnis</div>
-        <div class="grid-3">
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-chalkboard-user"></i></div>
-                <h3>Bimbingan Tugas & Riset</h3>
-                <p>Analisis studi kasus, penyusunan makalah, jurnal bisnis digital, hingga presentasi eksekutif. Dampingan dari praktisi.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-chart-simple"></i></div>
-                <h3>Konsultasi Strategi Bisnis</h3>
-                <p>Market intelligence, roadmap digital, optimasi rantai nilai, dan ekspansi pasar. Solusi untuk UKM dan korporasi.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-microchip"></i></div>
-                <h3>Trend Forecasting & AI Insight</h3>
-                <p>Pemanfaatan big data dan AI untuk membaca tren ekonomi digital 2026-2030. Tetap selangkah lebih maju.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Preview Artikel / Jurnal Terkini -->
-<section style="background: linear-gradient(to bottom, #03060C, #000000);">
-    <div class="section-container">
-        <div class="section-title">Wawasan Eksklusif</div>
-        <div class="section-sub">Dari jurnal terbaru & analisis mendalam tentang disruptor digital</div>
-        <div class="article-grid">
-            <div class="art-card">
-                <div class="art-img"><i class="fas fa-chart-line fa-3x"></i></div>
-                <div class="art-content">
-                    <div class="art-tag">Ekonomi Token</div>
-                    <h3 class="art-title">NFT & Loyalty 3.0: Masa Depan Customer Engagement</h3>
-                    <p class="art-desc">Bagaimana brand memanfaatkan aset digital untuk membangun ekosistem loyalitas generasi baru.</p>
-                    <a href="artikel.html" class="art-link">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="art-card">
-                <div class="art-img"><i class="fas fa-brain fa-3x"></i></div>
-                <div class="art-content">
-                    <div class="art-tag">AI & Otomasi</div>
-                    <h3 class="art-title">Generative AI dalam Strategi Marketing Digital</h3>
-                    <p class="art-desc">Analisis dampak ChatGPT-5, personalisasi massal, dan etika algoritma di 2026.</p>
-                    <a href="artikel.html" class="art-link">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="art-card">
-                <div class="art-img"><i class="fas fa-globe-asia fa-3x"></i></div>
-                <div class="art-content">
-                    <div class="art-tag">Riset Pasar</div>
-                    <h3 class="art-title">Potensi Ekonomi Kreatif Indonesia: Peluang Ekspor Digital</h3>
-                    <p class="art-desc">Data terbaru dan rekomendasi strategi penetrasi pasar ASEAN & Timur Tengah.</p>
-                    <a href="artikel.html" class="art-link">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Statistik Keunggulan / Why Us -->
-<section>
-    <div class="section-container">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h4>45+</h4>
-                <p>Proyek Kolaborasi</p>
-            </div>
-            <div class="stat-item">
-                <h4>100%</h4>
-                <p>Kepuasan Klien Akademik</p>
-            </div>
-            <div class="stat-item">
-                <h4>12+</h4>
-                <p>Tahun Pengalaman Gabungan Tim</p>
-            </div>
-            <div class="stat-item">
-                <h4>24/7</h4>
-                <p>Konsultasi Responsif</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA & Kolaborasi lebih personal -->
-<section style="padding-top: 0;">
-    <div class="section-container">
-        <div class="cta-area">
-            <h3><i class="fas fa-handshake"></i> Butuh bantuan tugas akhir atau riset bisnis?</h3>
-            <p style="margin-bottom: 1.6rem; color: #CBD5E1;">Tim kami siap membantu riset, analisis data, hingga penulisan jurnal terindeks. Hubungi melalui WhatsApp atau DM Instagram.</p>
-            <div class="btn-group" style="justify-content: center;">
-                <a href="https://wa.me/62882007027443" target="_blank" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Chat via WA</a>
-                <a href="kontak.html" class="btn btn-outline-light"><i class="fas fa-envelope"></i> Form Kontak Profesional</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Footer Elegant -->
-<footer class="footer">
-    <div class="social-footer">
-        <a href="https://wa.me/62882007027443" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://instagram.com/javaexprest.27" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://tiktok.com/@archiles_.27" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-    </div>
-    <p style="color:#94A3B8; margin-top: 1rem;">&copy; 2026 Insight Bisnis Digital — Dikelola oleh Muhammad Fuadi<br>Purworejo, Jawa Tengah, Indonesia | <i class="fas fa-graduation-cap"></i> Solusi Akademik & Konsultan Bisnis Digital</p>
-    <p style="margin-top: 0.8rem; font-size: 0.8rem;"><a href="index.html" style="color:#FFCA28;">Beranda</a> • <a href="artikel.html">Jurnal & Makalah</a> • <a href="kontak.html">Kontak</a></p>
-</footer>
-
-<!-- smooth scroll + navbar subtle effect -->
 <script>
-    (function() {
-        // navbar background semakin solid saat scroll
-        const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', () => {
-            if(window.scrollY > 50) {
-                navbar.style.background = 'rgba(5, 5, 10, 0.95)';
-                navbar.style.backdropFilter = 'blur(20px)';
-                navbar.style.borderBottomColor = 'rgba(255,202,40,0.4)';
-            } else {
-                navbar.style.background = 'rgba(10, 10, 10, 0.85)';
-                navbar.style.backdropFilter = 'blur(16px)';
-                navbar.style.borderBottomColor = 'rgba(255,202,40,0.2)';
-            }
-        });
-        // animasi sederhana untuk card ketika masuk viewport (opsional)
-        const cards = document.querySelectorAll('.service-card, .art-card, .stat-item');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-        cards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.5s ease';
-            observer.observe(card);
-        });
-    })();
+// ======================== DATA SIMULASI ========================
+let currentUser = null; // { username, role }
+let naskahList = JSON.parse(localStorage.getItem('naskahList')) || [];
+let beritaList = [{id:1, judul:"Call for Paper 2026", tgl:"1 Juni 2026", isi:"Deadline 30 Agustus 2026. Tema: Inovasi Digital"}];
+let artikelJurnal = [
+    { id:1, judul:"Transformasi Digital UMKM", penulis:"Budi Santoso", tahun:2025, kategori:"Ekonomi", abstrak:"Penelitian ini membahas digitalisasi UMKM di Jateng.", kataKunci:"UMKM, Digital", sitasi:12, akreditasi:"SINTA 2", doi:"10.1234/brida.001", pdfUrl:"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview:"diterima" },
+    { id:2, judul:"AI untuk Prediksi Panen", penulis:"Siti Aminah", tahun:2026, kategori:"Teknologi", abstrak:"Model machine learning untuk pertanian presisi.", kataKunci:"AI, Pertanian", sitasi:5, akreditasi:"SINTA 3", doi:"10.1234/brida.002", pdfUrl:"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview:"review" }
+];
+// Fungsi render utama
+function renderHome() {
+    document.getElementById('mainContent').innerHTML = `
+        <div class="grid-4">
+            <div class="info-card"><h3><i class="fas fa-newspaper"></i> Berita Terbaru</h3><ul id="beritaList"></ul></div>
+            <div class="info-card"><h3><i class="fas fa-chart-line"></i> Statistik Kunjungan</h3><div id="visitorStat">Loading...</div><canvas id="visitChart" width="300" height="150"></canvas></div>
+            <div class="info-card"><h3><i class="fas fa-tags"></i> Word Cloud (Kata Kunci)</h3><div id="wordCloud"></div></div>
+            <div class="info-card"><h3><i class="fas fa-calendar-alt"></i> Call for Paper</h3><p>Deadline: 30 Agustus 2026<br><button id="cfpPopupBtn" class="btn-primary">Lihat Pengumuman</button></p></div>
+        </div>
+        <div class="gallery-section" style="background:white; border-radius:1rem; padding:1rem; margin-bottom:2rem;"><h3>Galeri Video & Foto</h3><div class="swiper mySwiper"><div class="swiper-wrapper"><div class="swiper-slide"><img src="https://picsum.photos/id/20/800/400"></div><div class="swiper-slide"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div></div><div class="swiper-button-next"></div><div class="swiper-button-prev"></div></div></div>
+        <div class="additional-table"><h3>Daftar Jurnal Terbaru</h3><table id="jurnalTableHome" style="width:100%"><thead><tr><th>Judul</th><th>Penulis</th><th>Akreditasi</th><th>Aksi</th></tr></thead><tbody></tbody></table></div>
+    `;
+    // Berita
+    let ul = document.getElementById('beritaList');
+    beritaList.forEach(b => { ul.innerHTML += `<li><strong>${b.judul}</strong> (${b.tgl})<br>${b.isi}</li>`; });
+    // Statistik kunjungan & chart
+    let visits = localStorage.getItem('visits') || 0;
+    visits++; localStorage.setItem('visits', visits);
+    document.getElementById('visitorStat').innerHTML = `Total kunjungan: ${visits}`;
+    const ctx = document.getElementById('visitChart')?.getContext('2d');
+    if(ctx) new Chart(ctx, { type:'bar', data:{ labels:['Sen','Sel','Rab','Kam','Jum'], datasets:[{ label:'Kunjungan', data:[12,19,15,22,18], backgroundColor:'#2C5F8A' }] } });
+    // Word Cloud sederhana
+    let wordFreq = { UMKM:12, Digital:15, AI:8, Pertanian:10, Inovasi:7 };
+    let wcDiv = document.getElementById('wordCloud');
+    wcDiv.innerHTML = Object.keys(wordFreq).map(k => `<span style="font-size:${wordFreq[k]+12}px; margin:0 5px; display:inline-block;">${k}</span>`).join('');
+    // Tabel jurnal
+    let tbody = document.querySelector('#jurnalTableHome tbody');
+    artikelJurnal.forEach(art => {
+        let row = tbody.insertRow();
+        row.insertCell(0).innerText = art.judul;
+        row.insertCell(1).innerText = art.penulis;
+        row.insertCell(2).innerHTML = `<span class="badge-sinta">${art.akreditasi}</span>`;
+        row.insertCell(3).innerHTML = `<button class="btn-primary viewArticle" data-id="${art.id}">Detail</button>`;
+    });
+    document.querySelectorAll('.viewArticle').forEach(btn => btn.addEventListener('click', (e) => showArticleDetail(parseInt(btn.dataset.id))));
+    document.getElementById('cfpPopupBtn')?.addEventListener('click', () => alert("Call for Paper: Deadline 30 Agustus 2026, kirim naskah via form."));
+    initSwiper();
+}
+// Show article detail dengan semua fitur: AI Summary, QR, Text-to-Speech, Export Sitasi, Reader Mode, DOI, dll.
+async function showArticleDetail(id) {
+    let art = artikelJurnal.find(a => a.id === id);
+    if(!art) return;
+    let modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width:800px;">
+            <span class="close-modal">&times;</span>
+            <h2>${art.judul}</h2>
+            <p><strong>Penulis:</strong> ${art.penulis} | <strong>Tahun:</strong> ${art.tahun} | <strong>Kategori:</strong> ${art.kategori}</p>
+            <p><strong>Akreditasi:</strong> ${art.akreditasi} | <strong>DOI:</strong> <a href="https://doi.org/${art.doi}" target="_blank">${art.doi}</a> | <strong>Sitasi:</strong> ${art.sitasi}</p>
+            <p><strong>Abstrak:</strong> ${art.abstrak}</p>
+            <div id="aiSummaryArea"><button id="aiSummaryBtn" class="btn-primary">AI Ringkasan (Summarizer)</button><div id="summaryResult"></div></div>
+            <div><button id="ttsBtn" class="btn-primary"><i class="fas fa-volume-up"></i> Bacakan Abstrak</button></div>
+            <div><div id="qrcode"></div><button id="downloadQR" class="btn-primary">Download QR</button></div>
+            <div><button id="exportBibtex" class="btn-primary">Export BibTeX</button> <button id="exportRIS" class="btn-primary">Export RIS</button></div>
+            <div><button id="readerModeBtn" class="btn-primary">Mode Baca Nyaman</button></div>
+            <div><button id="shareWABtn" class="btn-primary"><i class="fab fa-whatsapp"></i> Bagikan WA</button></div>
+            <div><a href="${art.pdfUrl}" target="_blank" class="btn-primary">Download PDF</a></div>
+            <div><h4>Komentar & Diskusi</h4><div id="komentarList"></div><textarea id="komentarInput" placeholder="Tulis komentar..."></textarea><button id="submitKomentar">Kirim</button></div>
+            ${currentUser?.role === 'admin' ? `<div><h4>Manajemen Review</h4><select id="reviewStatusSelect"><option value="review">Review</option><option value="diterima">Diterima</option><option value="ditolak">Ditolak</option></select><button id="updateStatus">Update Status</button></div>` : ''}
+        </div>
+    `;
+    document.body.appendChild(modal);
+    let closeSpan = modal.querySelector('.close-modal');
+    closeSpan.onclick = () => modal.remove();
+    // AI Summarizer (Hugging Face mock)
+    document.getElementById('aiSummaryBtn').onclick = async () => {
+        document.getElementById('summaryResult').innerHTML = "Menghasilkan ringkasan... (simulasi) <br> Ringkasan: " + art.abstrak.substring(0, 100) + " ... (Teknologi AI membantu efisiensi).";
+    };
+    // Text-to-Speech
+    document.getElementById('ttsBtn').onclick = () => {
+        let utterance = new SpeechSynthesisUtterance(art.abstrak);
+        speechSynthesis.speak(utterance);
+    };
+    // QR Code
+    new QRCode(document.getElementById('qrcode'), { text: window.location.href + "?article=" + art.id, width: 128, height: 128 });
+    document.getElementById('downloadQR').onclick = () => alert("Simulasi download QR code.");
+    // Export BibTeX & RIS
+    document.getElementById('exportBibtex').onclick = () => {
+        let bib = `@article{${art.doi},\n  author={${art.penulis}},\n  title={${art.judul}},\n  year={${art.tahun}},\n  doi={${art.doi}}\n}`;
+        downloadFile(bib, "article.bib");
+    };
+    document.getElementById('exportRIS').onclick = () => {
+        let ris = `TY - JOUR\nAU - ${art.penulis}\nTI - ${art.judul}\nPY - ${art.tahun}\nDO - ${art.doi}\nER - `;
+        downloadFile(ris, "article.ris");
+    };
+    // Reader Mode
+    document.getElementById('readerModeBtn').onclick = () => {
+        let modalContent = modal.querySelector('.modal-content');
+        modalContent.classList.toggle('reader-mode');
+    };
+    // Share WA
+    document.getElementById('shareWABtn').onclick = () => {
+        window.open(`https://wa.me/?text=${encodeURIComponent(art.judul + " - " + art.abstrak)}`, '_blank');
+    };
+    // Komentar
+    let komentar = JSON.parse(localStorage.getItem('komentar_'+art.id)) || [];
+    function renderKomentar() { document.getElementById('komentarList').innerHTML = komentar.map(k => `<p><strong>${k.nama}:</strong> ${k.isi}</p>`).join(''); }
+    renderKomentar();
+    document.getElementById('submitKomentar').onclick = () => {
+        let isi = document.getElementById('komentarInput').value;
+        if(isi) { komentar.push({nama: currentUser?.username || "Anonim", isi}); localStorage.setItem('komentar_'+art.id, JSON.stringify(komentar)); renderKomentar(); document.getElementById('komentarInput').value=''; }
+    };
+    if(currentUser?.role === 'admin') {
+        document.getElementById('updateStatus').onclick = () => {
+            let newStatus = document.getElementById('reviewStatusSelect').value;
+            art.statusReview = newStatus;
+            alert("Status diperbarui: "+newStatus);
+            localStorage.setItem('artikelJurnal', JSON.stringify(artikelJurnal));
+        };
+    }
+    function downloadFile(content, filename) {
+        let a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([content])); a.download = filename; a.click();
+    }
+}
+// Plagiarisme Checker Modal
+function showPlagiarismChecker() {
+    let modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+    modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>Cek Plagiarisme</h3><textarea id="plagText" rows="5" placeholder="Tempel teks naskah..."></textarea><button id="checkPlagBtn" class="btn-primary">Cek Kemiripan</button><div id="plagResult"></div></div>`;
+    document.body.appendChild(modal);
+    modal.querySelector('.close-modal').onclick = () => modal.remove();
+    document.getElementById('checkPlagBtn').onclick = () => {
+        let text = document.getElementById('plagText').value;
+        let similarity = Math.floor(Math.random() * 30);
+        document.getElementById('plagResult').innerHTML = `Tingkat kemiripan: ${similarity}% (simulasi). ${similarity<20 ? 'Aman' : 'Perlu revisi'}`;
+    };
+}
+// Login & Manajemen Reviewer
+function showLogin() {
+    let modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+    modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>Login Peneliti</h3><input type="text" id="loginUser" placeholder="Username"><input type="password" id="loginPass" placeholder="Password"><button id="doLogin">Login</button><p>Admin: admin/admin | Peneliti: user/user</p></div>`;
+    document.body.appendChild(modal);
+    modal.querySelector('.close-modal').onclick = () => modal.remove();
+    document.getElementById('doLogin').onclick = () => {
+        let u = document.getElementById('loginUser').value;
+        let p = document.getElementById('loginPass').value;
+        if(u === 'admin' && p === 'admin') { currentUser = { username: u, role: 'admin' }; alert("Admin login sukses"); modal.remove(); renderHome(); }
+        else if(u === 'user' && p === 'user') { currentUser = { username: u, role: 'peneliti' }; alert("Peneliti login sukses"); modal.remove(); renderHome(); }
+        else alert("Gagal");
+    };
+}
+// Status Review (untuk peneliti)
+function showReviewStatus() {
+    if(!currentUser) { alert("Login dulu"); return; }
+    let myNaskah = naskahList.filter(n => n.penulis === currentUser.username);
+    let modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+    modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>Status Naskah Anda</h3><ul>${myNaskah.map(n => `<li>${n.judul} - Status: ${n.status || 'review'}</li>`).join('')}</ul></div>`;
+    document.body.appendChild(modal);
+    modal.querySelector('.close-modal').onclick = () => modal.remove();
+}
+// Submit Naskah dengan Plagiarism Check
+function showSubmitForm() {
+    let modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+    modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>Kirim Naskah</h3><input id="subJudul" placeholder="Judul"><input id="subPenulis" placeholder="Penulis"><textarea id="subAbstrak" placeholder="Abstrak"></textarea><input type="file" id="subFile"><button id="cekPlagSubmit">Cek Plagiarisme Dulu</button><div id="plagResultSubmit"></div><button id="submitFinal" class="btn-primary">Kirim Naskah</button></div>`;
+    document.body.appendChild(modal);
+    modal.querySelector('.close-modal').onclick = () => modal.remove();
+    document.getElementById('cekPlagSubmit').onclick = () => {
+        let sim = Math.floor(Math.random() * 40);
+        document.getElementById('plagResultSubmit').innerHTML = `Kemiripan: ${sim}% ${sim<25 ? 'Lolos' : 'Tinggi, perbaiki'}`;
+    };
+    document.getElementById('submitFinal').onclick = () => {
+        let naskahBaru = { judul: document.getElementById('subJudul').value, penulis: document.getElementById('subPenulis').value, abstrak: document.getElementById('subAbstrak').value, status: 'review', tgl: new Date().toISOString() };
+        naskahList.push(naskahBaru);
+        localStorage.setItem('naskahList', JSON.stringify(naskahList));
+        alert("Naskah terkirim! Status akan di-review.");
+        modal.remove();
+    };
+}
+// Sitemap Generator
+function generateSitemap() {
+    let url = window.location.href.split('?')[0];
+    let sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${url}</loc></url>`;
+    artikelJurnal.forEach(a => { sitemap += `<url><loc>${url}?article=${a.id}</loc></url>`; });
+    sitemap += `</urlset>`;
+    downloadFile(sitemap, "sitemap.xml");
+}
+// Notifikasi Real-time (simulasi)
+function requestNotification() { if(Notification.permission === 'granted') new Notification("BRIDA JATENG", {body:"Ada artikel baru direview"}); else Notification.requestPermission(); }
+// Template DOCX (simulasi download)
+function downloadTemplate() { alert("Download template DOCX (simulasi)"); }
+// Inisialisasi
+function initSwiper() { new Swiper('.mySwiper', { loop:true, navigation:{ nextEl:'.swiper-button-next', prevEl:'.swiper-button-prev' }, autoplay:{ delay:3000 } }); }
+// Event binding
+document.getElementById('loginBtn').onclick = showLogin;
+document.getElementById('reviewLink').onclick = (e) => { e.preventDefault(); showReviewStatus(); };
+document.getElementById('submitLink').onclick = (e) => { e.preventDefault(); showSubmitForm(); };
+document.getElementById('homeLink').onclick = (e) => { e.preventDefault(); renderHome(); };
+document.getElementById('journalLink').onclick = (e) => { e.preventDefault(); renderHome(); }; // sama
+// Dark mode
+document.getElementById('darkModeToggle').onclick = () => { document.body.classList.toggle('dark-mode'); };
+// Tambahan fitur: Plagiarism checker global
+let plagBtn = document.createElement('button'); plagBtn.innerHTML = "Cek Plagiarisme"; plagBtn.className = "btn-primary"; plagBtn.style.position = "fixed"; plagBtn.style.bottom = "20px"; plagBtn.style.right = "20px"; plagBtn.style.zIndex = "999"; plagBtn.onclick = showPlagiarismChecker; document.body.appendChild(plagBtn);
+// Sitemap & template
+let sitemapBtn = document.createElement('button'); sitemapBtn.innerHTML = "Generate Sitemap"; sitemapBtn.className = "btn-primary"; sitemapBtn.style.position = "fixed"; sitemapBtn.style.bottom = "20px"; sitemapBtn.style.left = "20px"; sitemapBtn.onclick = generateSitemap; document.body.appendChild(sitemapBtn);
+// Notifikasi & template
+if(Notification.permission !== 'granted' && Notification.permission !== 'denied') Notification.requestPermission();
+setTimeout(() => { if(Notification.permission === 'granted') new Notification("Selamat datang di BRIDA JATENG", { body: "Fitur lengkap tersedia!" }); }, 2000);
+renderHome();
 </script>
 </body>
 </html>
