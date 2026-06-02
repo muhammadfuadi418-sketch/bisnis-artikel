@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>BRIDA JATENG | Portal Jurnal Ultimate (Lengkap)</title>
+    <title>BRIDA JATENG | Portal Jurnal Ultimate</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -14,18 +14,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- Firebase SDK -->
-    <script type="importmap">
-        {
-            "imports": {
-                "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
-                "firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
-                "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js",
-                "firebase/storage": "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js",
-                "firebase/messaging": "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js"
-            }
-        }
-    </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #F4F7FC; color: #1E293B; transition: 0.3s; }
@@ -40,6 +28,7 @@
         .logo h1 { font-size: 1.5rem; color: #0F2E44; }
         .nav-links { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
         .btn-primary { background: #2C5F8A; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 40px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-danger { background: #dc2626; }
         .hero { padding: 3rem 2rem; text-align: center; background: linear-gradient(135deg, #EFF6FF, #FFF); }
         .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
         .info-card, .additional-table, .gallery-section { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid #E2EDF2; }
@@ -76,141 +65,118 @@
         </div>
     </div>
 </nav>
-<section class="hero"><h2 id="heroTitle">Portal Publikasi Jurnal Provinsi Jawa Tengah</h2><p>Ultimate: AI, Plagiarism, Live Chat, FCM, Profil, Export Excel, Filter Lanjutan, Bookmark, dll</p></section>
+<section class="hero"><h2 id="heroTitle">Portal Publikasi Jurnal Provinsi Jawa Tengah</h2><p>Demo: Login dengan fuadi / curugputri</p></section>
 <div class="container" id="mainContent"></div>
-<footer style="background:#0F2E44; color:white; text-align:center; padding:2rem;"><p>© 2026 BRIDA JATENG - Versi Super Lengkap</p></footer>
+<footer style="background:#0F2E44; color:white; text-align:center; padding:2rem;"><p>© 2026 BRIDA JATENG - Versi Demo</p></footer>
 
-<!-- Tawk.to Live Chat -->
 <script>
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function(){
-        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = 'https://embed.tawk.to/65f3d5d89131e19c4733b7b4/1h2j4k5l'; // Ganti dengan ID Tawk.to Anda
-        s1.charset = 'UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1, s0);
-    })();
-</script>
-
-<script type="module">
-    import { initializeApp } from "firebase/app";
-    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail, sendEmailVerification } from "firebase/auth";
-    import { getFirestore, collection, doc, getDocs, getDoc, addDoc, updateDoc, deleteDoc, query, where, orderBy, limit, startAfter, setDoc } from "firebase/firestore";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-    import { getMessaging, getToken, onMessage } from "firebase/messaging";
-
-    // ======================== KONFIGURASI (GANTI DENGAN MILIK ANDA) ========================
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_SENDER_ID",
-        appId: "YOUR_APP_ID"
+    // ======================== AKUN DEFAULT ========================
+    const DEMO_ACCOUNTS = {
+        "fuadi": { 
+            name: "Muhammad Fuadi", 
+            email: "fuadi@brida.com", 
+            password: "curugputri", 
+            role: "admin" 
+        },
+        "user": { 
+            name: "User Biasa", 
+            email: "user@brida.com", 
+            password: "user123", 
+            role: "user" 
+        },
+        "reviewer": { 
+            name: "Reviewer", 
+            email: "reviewer@brida.com", 
+            password: "reviewer123", 
+            role: "reviewer" 
+        }
     };
-    const HF_API_KEY = "YOUR_HUGGINGFACE_API_KEY";
-    const PLAGIARISM_API_KEY = "YOUR_PLAGIARISM_API_KEY";
-    const RECAPTCHA_SITE_KEY = "YOUR_RECAPTCHA_SITE_KEY";
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
-    const messaging = getMessaging(app);
+    // Data artikel awal
+    let artikelList = [
+        { id: "1", judul: "Transformasi Digital UMKM di Jawa Tengah", penulis: "Muhammad Fuadi", tahun: 2025, kategori: "Ekonomi", abstrak: "Penelitian ini membahas digitalisasi UMKM di Jawa Tengah yang meningkatkan produktivitas hingga 30%.", kataKunci: "UMKM, Digital, Inovasi", sitasi: 12, akreditasi: "SINTA 2", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview: "diterima" },
+        { id: "2", judul: "AI untuk Prediksi Panen Padi", penulis: "Siti Aminah", tahun: 2026, kategori: "Teknologi", abstrak: "Model machine learning untuk pertanian presisi menggunakan data iklim dan tanah.", kataKunci: "AI, Pertanian, Prediksi", sitasi: 5, akreditasi: "SINTA 3", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview: "review" },
+        { id: "3", judul: "Kearifan Lokal Pembangunan Berkelanjutan", penulis: "Joko Widodo", tahun: 2025, kategori: "Sosial", abstrak: "Kearifan lokal sebagai fondasi pembangunan berkelanjutan di pedesaan.", kataKunci: "Kearifan, Sosial, Budaya", sitasi: 8, akreditasi: "SINTA 1", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview: "diterima" }
+    ];
 
     // State
     let currentUser = null;
     let currentUserRole = "user";
-    let artikelList = [];
-    let lastDoc = null;
     let currentPage = 1;
-    const pageSize = 5;
+    let pageSize = 5;
+    let favorit = JSON.parse(localStorage.getItem('favorit')) || {};
+    let komentar = JSON.parse(localStorage.getItem('komentar')) || {};
     let lang = "id";
     const translations = { id: { heroTitle: "Portal Publikasi Jurnal Provinsi Jawa Tengah" }, en: { heroTitle: "Central Java Research Journal Portal" } };
 
-    // Bookmark (favorit)
-    async function getFavorit() {
+    // Helper functions
+    function saveData() {
+        localStorage.setItem('artikelList', JSON.stringify(artikelList));
+        localStorage.setItem('favorit', JSON.stringify(favorit));
+        localStorage.setItem('komentar', JSON.stringify(komentar));
+    }
+
+    function loadSavedData() {
+        const saved = localStorage.getItem('artikelList');
+        if (saved) artikelList = JSON.parse(saved);
+        const savedFav = localStorage.getItem('favorit');
+        if (savedFav) favorit = JSON.parse(savedFav);
+        const savedKom = localStorage.getItem('komentar');
+        if (savedKom) komentar = JSON.parse(savedKom);
+    }
+    loadSavedData();
+
+    function getFavorit() {
         if (!currentUser) return [];
-        const favRef = collection(db, "users", currentUser.uid, "favorit");
-        const snap = await getDocs(favRef);
-        return snap.docs.map(d => d.id);
+        return favorit[currentUser.email] || [];
     }
-    async function addFavorit(articleId) {
+    function addFavorit(articleId) {
         if (!currentUser) return;
-        await setDoc(doc(db, "users", currentUser.uid, "favorit", articleId), { added: new Date() });
+        if (!favorit[currentUser.email]) favorit[currentUser.email] = [];
+        if (!favorit[currentUser.email].includes(articleId)) {
+            favorit[currentUser.email].push(articleId);
+            saveData();
+        }
     }
-    async function removeFavorit(articleId) {
+    function removeFavorit(articleId) {
         if (!currentUser) return;
-        await deleteDoc(doc(db, "users", currentUser.uid, "favorit", articleId));
+        if (favorit[currentUser.email]) {
+            favorit[currentUser.email] = favorit[currentUser.email].filter(id => id !== articleId);
+            saveData();
+        }
     }
 
-    // FCM
-    async function registerFCM() {
-        if (!currentUser) return;
-        try {
-            const token = await getToken(messaging, { vapidKey: "YOUR_VAPID_KEY" });
-            await setDoc(doc(db, "fcmTokens", currentUser.uid), { token, updated: new Date() });
-        } catch(e) { console.warn("FCM error", e); }
-    }
-    onMessage(messaging, (payload) => { alert(`Notifikasi: ${payload.notification?.title || "Info"}\n${payload.notification?.body || ""}`); });
-
-    async function checkRole(email) {
-        if (!email) return "user";
-        if ((await getDoc(doc(db, "admins", email))).exists()) return "admin";
-        if ((await getDoc(doc(db, "reviewers", email))).exists()) return "reviewer";
-        return "user";
-    }
-
-    async function loadArticles(page = 1, filters = {}) {
-        let q = query(collection(db, "artikel"), orderBy("tahun", "desc"), limit(pageSize));
-        if (page > 1 && lastDoc) q = query(collection(db, "artikel"), orderBy("tahun", "desc"), startAfter(lastDoc), limit(pageSize));
-        const snap = await getDocs(q);
-        lastDoc = snap.docs[snap.docs.length - 1];
-        let articles = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        // Filter client-side untuk demo (karena Firestore query kompleks)
-        if (filters.judul) articles = articles.filter(a => a.judul.toLowerCase().includes(filters.judul.toLowerCase()));
-        if (filters.penulis) articles = articles.filter(a => a.penulis.toLowerCase().includes(filters.penulis.toLowerCase()));
-        if (filters.kategori && filters.kategori !== "") articles = articles.filter(a => a.kategori === filters.kategori);
-        if (filters.tahun && filters.tahun !== "") articles = articles.filter(a => a.tahun == filters.tahun);
-        artikelList = articles;
-        return artikelList;
-    }
-
+    // AI Summarizer simulasi
     async function aiSummarize(text) {
-        if (!HF_API_KEY || HF_API_KEY === "YOUR_HUGGINGFACE_API_KEY") return "API key Hugging Face belum diset.";
-        try {
-            const response = await fetch("https://api-inference.huggingface.co/models/facebook/bart-large-cnn", {
-                method: "POST", headers: { "Authorization": `Bearer ${HF_API_KEY}`, "Content-Type": "application/json" },
-                body: JSON.stringify({ inputs: text })
-            });
-            const data = await response.json();
-            return data[0]?.summary_text || "Gagal meringkas";
-        } catch(e) { return "Error API Summarizer"; }
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve("Ringkasan AI: " + text.substring(0, 150) + " ... (Teknologi AI memberikan efisiensi dan akurasi tinggi dalam analisis data)");
+            }, 1000);
+        });
     }
 
+    // Plagiarism Check simulasi
     async function checkPlagiarism(text) {
-        if (!PLAGIARISM_API_KEY || PLAGIARISM_API_KEY === "YOUR_PLAGIARISM_API_KEY") return "API key Plagiarism belum diset.";
-        try {
-            const response = await fetch("https://api.plagiarismchecker.ai/check", {
-                method: "POST", headers: { "Authorization": `Bearer ${PLAGIARISM_API_KEY}`, "Content-Type": "application/json" },
-                body: JSON.stringify({ text: text })
-            });
-            const data = await response.json();
-            return `Tingkat kemiripan: ${data.similarity || Math.floor(Math.random()*30)}%`;
-        } catch(e) { return "Error API (simulasi: 12% kemiripan)"; }
+        return new Promise(resolve => {
+            const similarity = Math.floor(Math.random() * 25);
+            setTimeout(() => {
+                resolve(`Tingkat kemiripan: ${similarity}% ${similarity < 20 ? '(Lolos)' : '(Perlu revisi)'}`);
+            }, 1000);
+        });
     }
 
+    // Render halaman utama
     async function renderHome() {
         const main = document.getElementById('mainContent');
-        await loadArticles(currentPage);
+        
+        // Statistik author
         const statsAuthor = {};
-        (await getDocs(collection(db, "artikel"))).docs.forEach(doc => {
-            const art = doc.data();
+        artikelList.forEach(art => {
             if (!statsAuthor[art.penulis]) statsAuthor[art.penulis] = { total: 0, sitasi: 0 };
             statsAuthor[art.penulis].total++;
             statsAuthor[art.penulis].sitasi += art.sitasi || 0;
         });
+
         main.innerHTML = `
             <div class="info-card"><h3>📊 Statistik Author</h3><ul>${Object.entries(statsAuthor).map(([n,d]) => `<li>${n}: ${d.total} artikel, total sitasi ${d.sitasi}</li>`).join('')}</ul></div>
             <div class="additional-table">
@@ -228,61 +194,82 @@
             </div>
             <div class="gallery-section"><h3>Galeri Kegiatan</h3><div class="swiper mySwiper"><div class="swiper-wrapper"><div class="swiper-slide"><img src="https://picsum.photos/id/20/800/400"></div><div class="swiper-slide"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div></div><div class="swiper-button-next"></div><div class="swiper-button-prev"></div></div></div>
         `;
+        
         await renderTable();
-        document.getElementById('searchBtn').onclick = async () => {
-            const filters = {
-                judul: document.getElementById('filterJudul').value,
-                penulis: document.getElementById('filterPenulis').value,
-                kategori: document.getElementById('filterKategori').value,
-                tahun: document.getElementById('filterTahun').value
-            };
-            await loadArticles(1, filters);
-            renderTable();
-        };
-        document.getElementById('exportExcelBtn').onclick = async () => {
-            const allArticles = (await getDocs(collection(db, "artikel"))).docs.map(d => d.data());
-            const ws = XLSX.utils.json_to_sheet(allArticles);
+        
+        document.getElementById('searchBtn').onclick = () => renderTable();
+        document.getElementById('filterJudul').onkeyup = () => renderTable();
+        document.getElementById('filterPenulis').onkeyup = () => renderTable();
+        document.getElementById('filterKategori').onchange = () => renderTable();
+        document.getElementById('filterTahun').onchange = () => renderTable();
+        
+        document.getElementById('exportExcelBtn').onclick = () => {
+            const ws = XLSX.utils.json_to_sheet(artikelList);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Jurnal");
             XLSX.writeFile(wb, "jurnal_brida.xlsx");
         };
+        
         new Swiper('.mySwiper', { loop: true, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, autoplay: { delay: 3000 } });
     }
 
     async function renderTable() {
         const tbody = document.getElementById('jurnalBody');
         tbody.innerHTML = '';
-        const favoritIds = await getFavorit();
-        for (const art of artikelList) {
+        
+        const judul = document.getElementById('filterJudul')?.value.toLowerCase() || '';
+        const penulis = document.getElementById('filterPenulis')?.value.toLowerCase() || '';
+        const kategori = document.getElementById('filterKategori')?.value || '';
+        const tahun = document.getElementById('filterTahun')?.value || '';
+        
+        let filtered = artikelList.filter(art => {
+            let match = true;
+            if (judul) match = match && (art.judul.toLowerCase().includes(judul) || (art.kataKunci || '').toLowerCase().includes(judul));
+            if (penulis) match = match && art.penulis.toLowerCase().includes(penulis);
+            if (kategori && kategori !== "") match = match && art.kategori === kategori;
+            if (tahun && tahun !== "") match = match && art.tahun == tahun;
+            return match;
+        });
+        
+        const start = (currentPage - 1) * pageSize;
+        const paginated = filtered.slice(start, start + pageSize);
+        const favoritIds = getFavorit();
+        
+        paginated.forEach(art => {
             const isFav = favoritIds.includes(art.id);
             const row = tbody.insertRow();
             row.insertCell(0).innerText = art.judul;
             row.insertCell(1).innerText = art.penulis;
             row.insertCell(2).innerText = art.tahun;
             row.insertCell(3).innerText = art.kategori || "-";
-            row.insertCell(4).innerHTML = `<span>${art.statusReview || 'review'}</span>`;
-            row.insertCell(5).innerHTML = `<button class="favBtn" data-id="${art.id}" style="background:none; border:none; cursor:pointer;"><i class="fas ${isFav ? 'fa-bookmark' : 'fa-bookmark'}"></i></button>`;
+            row.insertCell(4).innerHTML = `<span style="background:${art.statusReview==='diterima'?'#10b981':art.statusReview==='ditolak'?'#ef4444':'#f59e0b'}; color:white; padding:0.2rem 0.6rem; border-radius:20px;">${art.statusReview || 'review'}</span>`;
+            row.insertCell(5).innerHTML = `<button class="favBtn" data-id="${art.id}" style="background:none; border:none; cursor:pointer; color:${isFav?'#FFB347':'#94A3B8'}"><i class="fas fa-bookmark"></i></button>`;
             row.insertCell(6).innerHTML = `<button class="btn-primary viewArticle" data-id="${art.id}">Detail</button>`;
-        }
+        });
+        
         document.querySelectorAll('.viewArticle').forEach(btn => btn.addEventListener('click', (e) => showArticleDetail(btn.dataset.id)));
         document.querySelectorAll('.favBtn').forEach(btn => btn.addEventListener('click', async (e) => {
             const id = btn.dataset.id;
-            const isFav = (await getFavorit()).includes(id);
-            if (isFav) await removeFavorit(id);
-            else await addFavorit(id);
-            renderTable(); // refresh
+            if (getFavorit().includes(id)) removeFavorit(id);
+            else addFavorit(id);
+            renderTable();
         }));
+        
+        const totalPages = Math.ceil(filtered.length / pageSize);
         const pagDiv = document.getElementById('pagination');
-        pagDiv.innerHTML = `<button id="prevPage">◀ Prev</button><span> Halaman ${currentPage} </span><button id="nextPage">Next ▶</button>`;
-        document.getElementById('prevPage').onclick = async () => { if (currentPage > 1) { currentPage--; await loadArticles(currentPage); renderTable(); } };
-        document.getElementById('nextPage').onclick = async () => { currentPage++; await loadArticles(currentPage); renderTable(); };
+        pagDiv.innerHTML = `
+            <button id="prevPage" ${currentPage === 1 ? 'disabled' : ''}>◀ Prev</button>
+            <span> Halaman ${currentPage} dari ${totalPages || 1} </span>
+            <button id="nextPage" ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}>Next ▶</button>
+        `;
+        document.getElementById('prevPage')?.addEventListener('click', () => { if (currentPage > 1) { currentPage--; renderTable(); } });
+        document.getElementById('nextPage')?.addEventListener('click', () => { if (currentPage < totalPages) { currentPage++; renderTable(); } });
     }
 
     async function showArticleDetail(id) {
-        const artRef = doc(db, "artikel", id);
-        const artSnap = await getDoc(artRef);
-        if (!artSnap.exists()) return;
-        const art = { id: artSnap.id, ...artSnap.data() };
+        const art = artikelList.find(a => a.id === id);
+        if (!art) return;
+        
         const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
         modal.innerHTML = `
             <div class="modal-content">
@@ -293,158 +280,340 @@
                 <div><button id="aiSummaryBtn" class="btn-primary"><i class="fas fa-robot"></i> AI Ringkasan</button> <span id="summaryResult"></span></div>
                 <div><button id="plagiarismBtn" class="btn-primary"><i class="fas fa-search"></i> Cek Plagiarisme</button> <span id="plagResult"></span></div>
                 <canvas id="citationChart" width="300" height="150"></canvas>
-                <div><button id="ttsBtn" class="btn-primary"><i class="fas fa-volume-up"></i> Bacakan</button></div>
+                <div><button id="ttsBtn" class="btn-primary"><i class="fas fa-volume-up"></i> Bacakan Abstrak</button></div>
                 <div><div id="qrcode"></div></div>
-                <div><a href="${art.pdfUrl}" target="_blank" class="btn-primary">PDF</a></div>
+                <div><a href="${art.pdfUrl}" target="_blank" class="btn-primary"><i class="fas fa-file-pdf"></i> Download PDF</a></div>
                 <div><a href="#" id="googleScholarLink" class="btn-primary">Cari di Google Scholar</a></div>
                 ${(currentUserRole === 'admin' || currentUserRole === 'reviewer') ? `
-                    <div><h4>Review</h4>
-                    <select id="statusSelect"><option ${art.statusReview==='review'?'selected':''}>review</option><option ${art.statusReview==='diterima'?'selected':''}>diterima</option><option ${art.statusReview==='ditolak'?'selected':''}>ditolak</option></select>
+                    <div><h4>Manajemen Review</h4>
+                    <select id="statusSelect">
+                        <option ${art.statusReview==='review'?'selected':''}>review</option>
+                        <option ${art.statusReview==='diterima'?'selected':''}>diterima</option>
+                        <option ${art.statusReview==='ditolak'?'selected':''}>ditolak</option>
+                    </select>
                     <button id="updateStatusBtn" class="btn-primary">Update Status</button>
+                    <button id="deleteArticleBtn" class="btn-primary btn-danger" style="background:#dc2626;">Hapus Artikel</button>
                     </div>
                 ` : ''}
-                <div><h4>Komentar</h4><div id="komentarList"></div><textarea id="komentarInput"></textarea><button id="submitKomentar" class="btn-primary">Kirim</button></div>
+                <div><h4>Komentar & Diskusi</h4><div id="komentarList"></div><textarea id="komentarInput" placeholder="Tulis komentar..." rows="2" style="width:100%; margin:0.5rem 0; padding:0.5rem;"></textarea><button id="submitKomentar" class="btn-primary">Kirim Komentar</button></div>
             </div>
         `;
         document.body.appendChild(modal);
         modal.querySelector('.close-modal').onclick = () => modal.remove();
-        document.getElementById('aiSummaryBtn').onclick = async () => { document.getElementById('summaryResult').innerText = "⏳..."; const res = await aiSummarize(art.abstrak); document.getElementById('summaryResult').innerText = res; };
-        document.getElementById('plagiarismBtn').onclick = async () => { document.getElementById('plagResult').innerText = "⏳..."; const res = await checkPlagiarism(art.abstrak); document.getElementById('plagResult').innerText = res; };
-        new Chart(document.getElementById('citationChart'), { type: 'line', data: { labels: [2022,2023,2024,2025,2026], datasets: [{ label: 'Sitasi per Tahun', data: [2,5,8,12,art.sitasi||5], borderColor: '#2C5F8A' }] } });
-        document.getElementById('ttsBtn').onclick = () => { const u = new SpeechSynthesisUtterance(art.abstrak); speechSynthesis.speak(u); };
-        new QRCode(document.getElementById('qrcode'), { text: window.location.href+"?article="+art.id, width:128, height:128 });
-        document.getElementById('googleScholarLink').onclick = (e) => { e.preventDefault(); window.open(`https://scholar.google.com/scholar?q=${encodeURIComponent(art.judul)}`); };
+        
+        // AI Summarizer
+        document.getElementById('aiSummaryBtn').onclick = async () => {
+            document.getElementById('summaryResult').innerHTML = "⏳ Sedang meringkas...";
+            const result = await aiSummarize(art.abstrak);
+            document.getElementById('summaryResult').innerHTML = result;
+        };
+        
+        // Plagiarism Check
+        document.getElementById('plagiarismBtn').onclick = async () => {
+            document.getElementById('plagResult').innerHTML = "⏳ Memeriksa kemiripan...";
+            const result = await checkPlagiarism(art.abstrak);
+            document.getElementById('plagResult').innerHTML = result;
+        };
+        
+        // Grafik sitasi
+        new Chart(document.getElementById('citationChart'), { 
+            type: 'line', 
+            data: { 
+                labels: [2022,2023,2024,2025,2026], 
+                datasets: [{ label: 'Sitasi per Tahun', data: [2,5,8,12,art.sitasi||5], borderColor: '#2C5F8A', fill: false }] 
+            } 
+        });
+        
+        // Text-to-Speech
+        document.getElementById('ttsBtn').onclick = () => {
+            const utterance = new SpeechSynthesisUtterance(art.abstrak);
+            speechSynthesis.speak(utterance);
+        };
+        
+        // QR Code
+        new QRCode(document.getElementById('qrcode'), { text: window.location.href + "?article=" + art.id, width: 128, height: 128 });
+        
+        // Google Scholar
+        document.getElementById('googleScholarLink').onclick = (e) => {
+            e.preventDefault();
+            window.open(`https://scholar.google.com/scholar?q=${encodeURIComponent(art.judul)}`);
+        };
+        
+        // Admin/Reviewer actions
         if (currentUserRole === 'admin' || currentUserRole === 'reviewer') {
-            document.getElementById('updateStatusBtn').onclick = async () => { await updateDoc(artRef, { statusReview: document.getElementById('statusSelect').value }); alert("Status diperbarui"); modal.remove(); renderHome(); };
+            document.getElementById('updateStatusBtn').onclick = () => {
+                const newStatus = document.getElementById('statusSelect').value;
+                art.statusReview = newStatus;
+                saveData();
+                alert(`Status artikel "${art.judul}" diperbarui menjadi ${newStatus}`);
+                modal.remove();
+                renderHome();
+            };
+            document.getElementById('deleteArticleBtn').onclick = () => {
+                if (confirm(`Hapus artikel "${art.judul}"?`)) {
+                    const index = artikelList.findIndex(a => a.id === art.id);
+                    if (index !== -1) artikelList.splice(index, 1);
+                    saveData();
+                    alert("Artikel dihapus");
+                    modal.remove();
+                    renderHome();
+                }
+            };
         }
-        const komentarRef = collection(db, "artikel", art.id, "komentar");
-        async function loadKomentar() { const snap = await getDocs(komentarRef); document.getElementById('komentarList').innerHTML = snap.docs.map(d => `<p><strong>${d.data().nama}:</strong> ${d.data().isi}</p>`).join(''); }
-        loadKomentar();
-        document.getElementById('submitKomentar').onclick = async () => { if (!currentUser) { alert("Login"); return; } const isi = document.getElementById('komentarInput').value; if (isi) { await addDoc(komentarRef, { nama: currentUser.email, isi: DOMPurify.sanitize(isi), waktu: new Date() }); loadKomentar(); document.getElementById('komentarInput').value = ''; } };
+        
+        // Komentar
+        if (!komentar[art.id]) komentar[art.id] = [];
+        function renderKomentar() {
+            const komentarDiv = document.getElementById('komentarList');
+            komentarDiv.innerHTML = komentar[art.id].map(k => `<p><strong>${k.nama}:</strong> ${DOMPurify.sanitize(k.isi)} <span style="font-size:0.7rem; color:#94A3B8;">(${k.waktu})</span></p>`).join('');
+        }
+        renderKomentar();
+        document.getElementById('submitKomentar').onclick = () => {
+            const isi = document.getElementById('komentarInput').value;
+            if (!isi.trim()) { alert("Isi komentar dulu"); return; }
+            if (!currentUser) { alert("Login dulu untuk berkomentar"); return; }
+            komentar[art.id].push({ nama: currentUser.name || currentUser.email, isi: DOMPurify.sanitize(isi), waktu: new Date().toLocaleString() });
+            saveData();
+            renderKomentar();
+            document.getElementById('komentarInput').value = '';
+        };
     }
 
+    // Profil peneliti
     async function showProfile() {
         if (!currentUser) { alert("Login dulu"); return; }
         const userEmail = currentUser.email;
-        const allArticles = (await getDocs(collection(db, "artikel"))).docs.map(d => d.data());
-        const articles = allArticles.filter(a => a.penulis === userEmail);
+        const articles = artikelList.filter(a => a.penulis === currentUser.name || a.penulis === userEmail);
         const totalSitasi = articles.reduce((s, a) => s + (a.sitasi || 0), 0);
         const hIndex = articles.filter(a => (a.sitasi || 0) >= articles.length).length;
         const sitasiPerTahun = { 2022:0,2023:0,2024:0,2025:0,2026:0 };
         articles.forEach(a => { sitasiPerTahun[a.tahun] = (sitasiPerTahun[a.tahun] || 0) + (a.sitasi || 0); });
+        
         const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
-        modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>Profil Peneliti: ${userEmail}</h3><p>Total Artikel: ${articles.length}</p><p>Total Sitasi: ${totalSitasi}</p><p>h-index: ${hIndex}</p><canvas id="profileChart" width="300" height="150"></canvas><button id="resetPasswordBtn" class="btn-primary">Reset Password</button><button id="verifyEmailBtn" class="btn-primary">Verifikasi Email</button></div>`;
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3><i class="fas fa-user-circle"></i> Profil Peneliti</h3>
+                <p><strong>Nama:</strong> ${currentUser.name || currentUser.email}</p>
+                <p><strong>Email:</strong> ${currentUser.email}</p>
+                <p><strong>Role:</strong> ${currentUserRole}</p>
+                <p><strong>Total Artikel:</strong> ${articles.length}</p>
+                <p><strong>Total Sitasi:</strong> ${totalSitasi}</p>
+                <p><strong>h-index:</strong> ${hIndex}</p>
+                <canvas id="profileChart" width="300" height="150"></canvas>
+            </div>
+        `;
         document.body.appendChild(modal);
         modal.querySelector('.close-modal').onclick = () => modal.remove();
-        new Chart(document.getElementById('profileChart'), { type: 'bar', data: { labels: Object.keys(sitasiPerTahun), datasets: [{ label: 'Sitasi per Tahun', data: Object.values(sitasiPerTahun) }] } });
-        document.getElementById('resetPasswordBtn').onclick = async () => { await sendPasswordResetEmail(auth, currentUser.email); alert("Email reset terkirim"); };
-        document.getElementById('verifyEmailBtn').onclick = async () => { await sendEmailVerification(currentUser); alert("Email verifikasi terkirim"); };
+        new Chart(document.getElementById('profileChart'), { type: 'bar', data: { labels: Object.keys(sitasiPerTahun), datasets: [{ label: 'Sitasi per Tahun', data: Object.values(sitasiPerTahun), backgroundColor: '#2C5F8A' }] } });
     }
 
+    // Form kirim naskah
     function showSubmitForm() {
+        if (!currentUser) { alert("Login dulu untuk kirim naskah"); return; }
         const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
-        modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>Kirim Naskah Baru</h3><form id="naskahForm"><input id="judul" placeholder="Judul" required><input id="penulis" placeholder="Penulis" required><input id="tahun" type="number" placeholder="Tahun"><select id="kategori"><option>Ekonomi</option><option>Teknologi</option><option>Sosial</option></select><textarea id="abstrak" placeholder="Abstrak"></textarea><input type="file" id="filePDF" accept=".pdf" required><div class="g-recaptcha" data-sitekey="${RECAPTCHA_SITE_KEY}"></div><button type="submit" class="btn-primary">Kirim</button></form></div>`;
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Kirim Naskah Baru</h3>
+                <form id="naskahForm">
+                    <div class="filter-group" style="flex-direction:column;">
+                        <input id="judul" placeholder="Judul Artikel" required style="width:100%;">
+                        <input id="penulis" placeholder="Nama Penulis" value="${currentUser.name || ''}" required style="width:100%;">
+                        <input id="tahun" type="number" placeholder="Tahun" required style="width:100%;">
+                        <select id="kategori" required style="width:100%;"><option>Ekonomi</option><option>Teknologi</option><option>Sosial</option></select>
+                        <textarea id="abstrak" placeholder="Abstrak" rows="3" required style="width:100%;"></textarea>
+                        <input id="kataKunci" placeholder="Kata Kunci (pisah koma)" style="width:100%;">
+                        <input type="file" id="filePDF" accept=".pdf" required style="width:100%;">
+                        <button type="submit" class="btn-primary">Kirim Naskah</button>
+                    </div>
+                </form>
+            </div>
+        `;
         document.body.appendChild(modal);
         modal.querySelector('.close-modal').onclick = () => modal.remove();
-        document.getElementById('naskahForm').addEventListener('submit', async (e) => {
+        
+        document.getElementById('naskahForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            if (!grecaptcha || !grecaptcha.getResponse()) { alert("Captcha"); return; }
-            const file = document.getElementById('filePDF').files[0];
-            const storageRef = ref(storage, `naskah/${Date.now()}_${file.name}`);
-            await uploadBytes(storageRef, file);
-            const pdfUrl = await getDownloadURL(storageRef);
-            await addDoc(collection(db, "artikel"), {
-                judul: document.getElementById('judul').value, penulis: document.getElementById('penulis').value,
-                tahun: parseInt(document.getElementById('tahun').value), kategori: document.getElementById('kategori').value,
-                abstrak: document.getElementById('abstrak').value, pdfUrl, statusReview: "review", sitasi: 0
-            });
-            alert("Naskah terkirim"); modal.remove(); renderHome();
+            const newId = String(Date.now());
+            const newArticle = {
+                id: newId,
+                judul: document.getElementById('judul').value,
+                penulis: document.getElementById('penulis').value,
+                tahun: parseInt(document.getElementById('tahun').value),
+                kategori: document.getElementById('kategori').value,
+                abstrak: document.getElementById('abstrak').value,
+                kataKunci: document.getElementById('kataKunci').value,
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                sitasi: 0,
+                statusReview: "review"
+            };
+            artikelList.unshift(newArticle);
+            saveData();
+            alert("Naskah berhasil dikirim! Menunggu review.");
+            modal.remove();
+            renderHome();
         });
     }
 
+    // Admin panel
     async function showAdminPanel() {
+        if (currentUserRole !== 'admin') { alert("Hanya admin yang bisa akses panel ini"); return; }
         const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
-        modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>Admin Panel</h3><button id="exportLaporanBtn" class="btn-primary">Export Laporan Bulanan (PDF)</button><button id="genSitemapBtn" class="btn-primary">Generate Sitemap XML</button><h4>Kelola Reviewer</h4><input type="email" id="reviewerEmail" placeholder="Email Reviewer"><button id="addReviewerBtn" class="btn-primary">Tambah Reviewer</button><div id="reviewerList"></div></div>`;
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Panel Admin</h3>
+                <button id="exportLaporanBtn" class="btn-primary">Export Laporan Bulanan (PDF)</button>
+                <button id="genSitemapBtn" class="btn-primary">Generate Sitemap XML</button>
+                <button id="resetDataBtn" class="btn-primary btn-danger" style="background:#dc2626;">Reset Data ke Default</button>
+                <hr style="margin:1rem 0;">
+                <h4>Kelola Reviewer</h4>
+                <input type="email" id="reviewerEmail" placeholder="Email Reviewer">
+                <button id="addReviewerBtn" class="btn-primary">Tambah Reviewer</button>
+                <div id="reviewerList"></div>
+            </div>
+        `;
         document.body.appendChild(modal);
         modal.querySelector('.close-modal').onclick = () => modal.remove();
+        
         document.getElementById('exportLaporanBtn').onclick = async () => {
-            const articles = (await getDocs(collection(db, "artikel"))).docs.map(d => d.data());
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF();
-            pdf.text("Laporan Bulanan BRIDA", 10, 10);
-            pdf.text(`Total artikel: ${articles.length}`, 10, 20);
+            pdf.text("Laporan Bulanan BRIDA JATENG", 10, 10);
+            pdf.text(`Total artikel: ${artikelList.length}`, 10, 20);
             let y = 30;
-            articles.slice(0, 10).forEach((a, i) => { pdf.text(`${i+1}. ${a.judul} (${a.penulis})`, 10, y); y += 8; });
+            artikelList.slice(0, 15).forEach((a, i) => { pdf.text(`${i+1}. ${a.judul} (${a.penulis})`, 10, y); y += 8; });
             pdf.save("laporan_bulanan.pdf");
         };
-        document.getElementById('genSitemapBtn').onclick = async () => {
-            const articles = (await getDocs(collection(db, "artikel"))).docs.map(d => ({ id: d.id }));
+        
+        document.getElementById('genSitemapBtn').onclick = () => {
             let sitemap = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
             sitemap += `<url><loc>${window.location.origin}</loc></url>`;
-            articles.forEach(a => { sitemap += `<url><loc>${window.location.origin}?article=${a.id}</loc></url>`; });
+            artikelList.forEach(a => { sitemap += `<url><loc>${window.location.origin}?article=${a.id}</loc></url>`; });
             sitemap += '</urlset>';
             const blob = new Blob([sitemap], {type: 'application/xml'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a'); a.href = url; a.download = 'sitemap.xml'; a.click();
             URL.revokeObjectURL(url);
         };
-        document.getElementById('addReviewerBtn').onclick = async () => {
-            const email = document.getElementById('reviewerEmail').value;
-            await setDoc(doc(db, "reviewers", email), { email, added: new Date() });
-            alert("Reviewer ditambahkan"); loadReviewers();
+        
+        document.getElementById('resetDataBtn').onclick = () => {
+            if (confirm("Reset semua data ke default? Data yang ada akan hilang!")) {
+                artikelList = [
+                    { id: "1", judul: "Transformasi Digital UMKM di Jawa Tengah", penulis: "Muhammad Fuadi", tahun: 2025, kategori: "Ekonomi", abstrak: "Penelitian ini membahas digitalisasi UMKM di Jawa Tengah yang meningkatkan produktivitas hingga 30%.", kataKunci: "UMKM, Digital, Inovasi", sitasi: 12, akreditasi: "SINTA 2", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview: "diterima" },
+                    { id: "2", judul: "AI untuk Prediksi Panen Padi", penulis: "Siti Aminah", tahun: 2026, kategori: "Teknologi", abstrak: "Model machine learning untuk pertanian presisi menggunakan data iklim dan tanah.", kataKunci: "AI, Pertanian, Prediksi", sitasi: 5, akreditasi: "SINTA 3", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", statusReview: "review" }
+                ];
+                saveData();
+                alert("Data telah direset");
+                modal.remove();
+                renderHome();
+            }
         };
-        async function loadReviewers() { const snap = await getDocs(collection(db, "reviewers")); document.getElementById('reviewerList').innerHTML = snap.docs.map(d => `<p>${d.id}</p>`).join(''); }
+        
+        document.getElementById('addReviewerBtn').onclick = () => {
+            const email = document.getElementById('reviewerEmail').value;
+            if (email) {
+                DEMO_ACCOUNTS[email.split('@')[0]] = { name: email.split('@')[0], email: email, password: "default123", role: "reviewer" };
+                alert(`Reviewer ${email} ditambahkan (password: default123)`);
+                document.getElementById('reviewerEmail').value = '';
+                loadReviewers();
+            }
+        };
+        
+        function loadReviewers() {
+            const reviewers = Object.entries(DEMO_ACCOUNTS).filter(([k,v]) => v.role === 'reviewer');
+            document.getElementById('reviewerList').innerHTML = reviewers.map(([k,v]) => `<p>${v.email} (${v.role})</p>`).join('');
+        }
         loadReviewers();
     }
 
-    function showAuthModal() {
-        const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
-        modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>Login / Daftar</h3><input id="authEmail" placeholder="Email"><input id="authPassword" type="password" placeholder="Password"><div class="g-recaptcha" data-sitekey="${RECAPTCHA_SITE_KEY}"></div><button id="loginAuthBtn" class="btn-primary">Login</button><button id="registerAuthBtn" class="btn-primary">Daftar</button><button id="resetPassBtn" class="btn-primary">Lupa Password</button></div>`;
-        document.body.appendChild(modal);
-        modal.querySelector('.close-modal').onclick = () => modal.remove();
-        document.getElementById('loginAuthBtn').onclick = async () => { if (!grecaptcha.getResponse()) return alert("Captcha"); await signInWithEmailAndPassword(auth, document.getElementById('authEmail').value, document.getElementById('authPassword').value); modal.remove(); };
-        document.getElementById('registerAuthBtn').onclick = async () => { if (!grecaptcha.getResponse()) return alert("Captcha"); const userCred = await createUserWithEmailAndPassword(auth, document.getElementById('authEmail').value, document.getElementById('authPassword').value); await sendEmailVerification(userCred.user); alert("Registrasi berhasil, cek email verifikasi"); modal.remove(); };
-        document.getElementById('resetPassBtn').onclick = async () => { const email = document.getElementById('authEmail').value; if (email) await sendPasswordResetEmail(auth, email); alert("Email reset terkirim"); };
-    }
-
+    // Show favorit list
     async function showFavoritList() {
         if (!currentUser) { alert("Login dulu"); return; }
-        const favIds = await getFavorit();
+        const favIds = getFavorit();
         if (favIds.length === 0) { alert("Belum ada artikel favorit"); return; }
         const favArticles = artikelList.filter(a => favIds.includes(a.id));
         const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
-        modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>Artikel Favorit</h3><ul>${favArticles.map(a => `<li><a href="#" class="favArticleLink" data-id="${a.id}">${a.judul}</a></li>`).join('')}</ul></div>`;
+        modal.innerHTML = `<div class="modal-content"><span class="close-modal">&times;</span><h3>📋 Artikel Favorit Anda</h3><ul>${favArticles.map(a => `<li><a href="#" class="favArticleLink" data-id="${a.id}">${a.judul}</a> (${a.penulis})</li>`).join('')}</ul></div>`;
         document.body.appendChild(modal);
         modal.querySelector('.close-modal').onclick = () => modal.remove();
         document.querySelectorAll('.favArticleLink').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); const id = link.dataset.id; modal.remove(); showArticleDetail(id); }));
     }
 
+    // Login/Register modal
+    function showAuthModal() {
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>🔐 Login / Daftar</h3>
+                <div class="filter-group" style="flex-direction:column;">
+                    <input type="text" id="authUsername" placeholder="Username (fuadi / user / reviewer)" style="width:100%;">
+                    <input type="password" id="authPassword" placeholder="Password" style="width:100%;">
+                    <small>Akun demo: fuadi / curugputri (admin) | user / user123 | reviewer / reviewer123</small>
+                    <button id="loginAuthBtn" class="btn-primary">Login</button>
+                    <button id="registerAuthBtn" class="btn-primary">Daftar Baru</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector('.close-modal').onclick = () => modal.remove();
+        
+        document.getElementById('loginAuthBtn').onclick = () => {
+            const username = document.getElementById('authUsername').value;
+            const password = document.getElementById('authPassword').value;
+            const account = DEMO_ACCOUNTS[username];
+            if (account && account.password === password) {
+                currentUser = { name: account.name, email: account.email, uid: account.email };
+                currentUserRole = account.role;
+                alert(`Login berhasil! Selamat datang ${account.name} (${account.role})`);
+                modal.remove();
+                const loginBtn = document.getElementById('loginBtn');
+                const logoutBtn = document.getElementById('logoutBtn');
+                const adminLink = document.getElementById('adminPanelLink');
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline-block';
+                if (currentUserRole === 'admin') adminLink.style.display = 'inline-block';
+                else adminLink.style.display = 'none';
+                renderHome();
+            } else {
+                alert("Username atau password salah! Gunakan: fuadi / curugputri");
+            }
+        };
+        
+        document.getElementById('registerAuthBtn').onclick = () => {
+            const username = document.getElementById('authUsername').value;
+            const password = document.getElementById('authPassword').value;
+            if (!username || !password) { alert("Isi username dan password"); return; }
+            if (DEMO_ACCOUNTS[username]) { alert("Username sudah ada"); return; }
+            DEMO_ACCOUNTS[username] = { name: username, email: `${username}@brida.com`, password: password, role: "user" };
+            alert(`Akun ${username} berhasil didaftarkan! Silakan login.`);
+        };
+    }
+
+    // Event listeners
     document.getElementById('langId').onclick = () => { lang='id'; document.getElementById('heroTitle').innerText = translations.id.heroTitle; };
     document.getElementById('langEn').onclick = () => { lang='en'; document.getElementById('heroTitle').innerText = translations.en.heroTitle; };
     document.getElementById('homeLink').onclick = (e) => { e.preventDefault(); renderHome(); };
     document.getElementById('journalLink').onclick = (e) => { e.preventDefault(); renderHome(); };
-    document.getElementById('submitLink').onclick = (e) => { e.preventDefault(); if(currentUser) showSubmitForm(); else alert("Login dulu"); };
+    document.getElementById('submitLink').onclick = (e) => { e.preventDefault(); showSubmitForm(); };
     document.getElementById('profileLink').onclick = (e) => { e.preventDefault(); showProfile(); };
     document.getElementById('adminPanelLink').onclick = (e) => { e.preventDefault(); showAdminPanel(); };
     document.getElementById('favoritLink').onclick = (e) => { e.preventDefault(); showFavoritList(); };
     document.getElementById('darkModeToggle').onclick = () => document.body.classList.toggle('dark-mode');
-
-    onAuthStateChanged(auth, async (user) => {
-        currentUser = user;
-        const loginBtn = document.getElementById('loginBtn'), logoutBtn = document.getElementById('logoutBtn'), adminLink = document.getElementById('adminPanelLink');
-        if (user) {
-            loginBtn.style.display = 'none'; logoutBtn.style.display = 'inline-block';
-            currentUserRole = await checkRole(user.email);
-            if (currentUserRole === 'admin') adminLink.style.display = 'inline-block';
-            else adminLink.style.display = 'none';
-            await loadArticles(); renderHome(); registerFCM();
-        } else {
-            loginBtn.style.display = 'inline-block'; logoutBtn.style.display = 'none'; adminLink.style.display = 'none';
-            renderHome();
-        }
-    });
-    document.getElementById('logoutBtn').onclick = () => signOut(auth);
     document.getElementById('loginBtn').onclick = showAuthModal;
+    document.getElementById('logoutBtn').onclick = () => {
+        currentUser = null;
+        currentUserRole = "user";
+        document.getElementById('loginBtn').style.display = 'inline-block';
+        document.getElementById('logoutBtn').style.display = 'none';
+        document.getElementById('adminPanelLink').style.display = 'none';
+        renderHome();
+        alert("Logout berhasil");
+    };
+    
+    renderHome();
 </script>
 </body>
 </html>
